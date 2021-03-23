@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
+import {withRouter} from 'react-router-dom';
 import './signup.scss';
 
 import {auth, handleUserProfile} from './../../firebase/utils';
@@ -7,43 +8,59 @@ import FormInput from './../forms/FormInput/forminput';
 import Button from './../forms/Button/button';
 
 //object
-const initialState = {
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword:'',
-    errors: []
-};
+// const initialState = {
+//     displayName: '',
+//     email: '',
+//     password: '',
+//     confirmPassword:'',
+//     errors: []
+// };
 
-class Signup extends Component {
-    constructor(props){
-        super(props);
-        this.state ={
-            ...initialState
-        };
+const Signup = props => {
+    const [displayName, setDisplayName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [errors, setErrors] = useState([]);
 
-        this.handleChange = this.handleChange.bind(this);
-    }
+    //vaciar formulario
+    const reset = () =>{
+        setDisplayName('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setErrors([]);
+    };
+
+    // constructor(props){
+    //     super(props);
+    //     this.state ={
+    //         ...initialState
+    //     };
+
+    //     this.handleChange = this.handleChange.bind(this);
+    // }
 
     //metodo para capturar los cambios
-    handleChange(e){
-        const {name, value} = e.target;
+    // handleChange(e){
+    //     const {name, value} = e.target;
 
-        this.setState({
-            [name]: value
-        });
-    }
+    //     this.setState({
+    //         [name]: value
+    //     });
+    // }
 
-    handleFormSubmit = async event => {
+   const handleFormSubmit = async event => {
         event.preventDefault();
-        const {displayName, email, password, confirmPassword} = this.state;
+        //const {displayName, email, password, confirmPassword} = this.state;
 
         //valodacion de password y confirm password
         if(password !== confirmPassword){
             const err = ['Las contraseñas no coinciden'];
-            this.setState({
-                errors:err
-            });
+            // this.setState({
+            //     errors:err
+            // });
+            setErrors(err);
             return;
         }
 
@@ -54,9 +71,12 @@ class Signup extends Component {
             await handleUserProfile(user, {displayName});
 
             //resetear el formulario
-            this.setState({
-                ...initialState
-            });
+            // this.setState({
+            //     ...initialState
+            // });
+            reset();
+
+            props.history.push('/');
 
         }catch(err){
             // console.log(err);
@@ -64,8 +84,8 @@ class Signup extends Component {
 
     }
 
-    render(){
-        const {displayName, email, password, confirmPassword, errors} = this.state;
+    //render(){
+        //const {displayName, email, password, confirmPassword, errors} = this.state;
 
         const configAuthWrapper = {
             headline: 'Crear cuenta'
@@ -87,34 +107,34 @@ class Signup extends Component {
                         </ul>
                     )}
 
-                        <form onSubmit={this.handleFormSubmit}>
+                        <form onSubmit={handleFormSubmit}>
                             <FormInput
                                 type="text"
                                 name="displayName"
                                 value={displayName}
                                 placeholder="Ingrese su nombre completo"
-                                onChange={this.handleChange}
+                                handleChange={e => setDisplayName(e.target.value)}
                             />
                             <FormInput
                                 type="email"
                                 name="email"
                                 value={email}
                                 placeholder="Ingrese su correo electrónico"
-                                onChange={this.handleChange}
+                                handleChange={e => setEmail(e.target.value)}
                             />
                             <FormInput
                                 type="password"
                                 name="password"
                                 value={password}
                                 placeholder="Ingrese una contraseña"
-                                onChange={this.handleChange}
+                                handleChange={e => setPassword(e.target.value)}
                             />
                             <FormInput
                                 type="password"
                                 name="confirmPassword"
                                 value={confirmPassword}
                                 placeholder="Confirme la contraseña"
-                                onChange={this.handleChange}
+                                handleChange={e => setConfirmPassword(e.target.value)}
                             />
 
                             {/* no usar una contraseña demasiado corta porque se rompe */}
@@ -126,6 +146,6 @@ class Signup extends Component {
             </AuthWrapper>
         )
     }
-}
+//}
 
-export default Signup;
+export default withRouter(Signup);

@@ -21,6 +21,11 @@ const Header = props =>{
                 <div className="callToActions">
                     {currentUser && (
                        <ul>  
+                            <li>
+                            <Link to="/dashboard">
+                                Mi perfil
+                            </Link>
+                        </li>
                            <li>
                                <span onClick={() => auth.signOut()}>
                                    Logout
@@ -30,7 +35,12 @@ const Header = props =>{
                     )}
 
                     {!currentUser && (
-                        <ul>
+                    <ul>
+                        {/* <li>
+                            <Link to="/dashboard">
+                                Dashboard
+                            </Link>
+                        </li> */}
                         <li>
                             <Link to="/registration">
                                 Register

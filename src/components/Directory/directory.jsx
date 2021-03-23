@@ -1,6 +1,5 @@
 import React from 'react';
-import Clasicos from './../../assets/clasicos.JPG'
-import Terror from './../../assets/terror.JPG'
+import Clasicos from './../../assets/clasicos.JPG';
 import './directory.scss';
 
 const Directory = props =>{
@@ -15,10 +14,10 @@ const Directory = props =>{
                     }
                 }>
                     <a href="fff">
-                        Shop Clasicos
+                        Ir al Bookshop
                     </a>
                 </div>
-                <div
+                {/* <div
                 className='item'
                 style={
                     {
@@ -29,7 +28,7 @@ const Directory = props =>{
                         Shop Terror
                     </a>
                     
-                </div>
+                </div> */}
             </div>
         </div>
     );

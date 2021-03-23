@@ -1,5 +1,5 @@
 //para recuperar la contraseña
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import {withRouter} from 'react-router-dom';
 import './emailpassword.scss';
 
@@ -9,33 +9,37 @@ import Button from './../forms/Button/button';
 
 import {auth} from './../../firebase/utils';
 
-const initialState = {
-    email: '',
-    errors: []
-};
+// const initialState = {
+//     email: '',
+//     errors: []
+// };
 
-class EmailPassword extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            ...initialState
-        };
+const EmailPassword = props => {
+    const [email, setEmail] = useState('');
+    const [errors, setErrors] = useState([]);
 
-        this.handleChange=this.handleChange.bind(this);
-    }
 
-    handleChange(e){
-        const {name, value} = e.target;
-        this.setState({
-            [name]:value
-        });
-    }
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         ...initialState
+    //     };
 
-    handleSubmit = async (e) =>{
+    //     this.handleChange=this.handleChange.bind(this);
+    // }
+
+    // handleChange(e){
+    //     const {name, value} = e.target;
+    //     this.setState({
+    //         [name]:value
+    //     });
+    // }
+
+    const handleSubmit = async (e) =>{
         e.preventDefault(); //previene que se recargue la pagina
 
         try{
-            const {email}=this.state;
+            //const {email}=this.state;
             const config ={
                 //pagina a la que mandamos al usuario una vez que 
                 // modifico la contraseña
@@ -49,14 +53,15 @@ class EmailPassword extends Component {
         
             .then(() => { //en el caso que funcione que hace
                 console.log('Contraseña modificada con exito');
-                this.props.history.push('/login'); //redirije al login
+                props.history.push('/login'); //redirije al login
             })
             .catch(() => { //en el caso que falle que hace
                 console.log('No se pudo cambiar la contraseña');
                 const err = ['Cuenta inexistente. Intente de nuevo.'];
-                this.setState({
-                    errors:err
-                });
+                // this.setState({
+                //     errors:err
+                // });
+                setErrors(err);
             });
 
         }catch(err){
@@ -64,9 +69,9 @@ class EmailPassword extends Component {
         }
     }
 
-    render(){
+    //render(){
 
-        const {email, errors} = this.state;
+        //const {email, errors} = this.state;
 
         const configAuthWrapper = {
             headline: 'Recuperar Contraseña'
@@ -88,13 +93,13 @@ class EmailPassword extends Component {
                         </ul>
                     )}   
 
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={handleSubmit}>
                         <FormInput
                             type="email"
                             name="email"
                             value={email}
                             placeholder="Ingrese su mail"
-                            onChange={this.handleChange}
+                            handleChange={e =>setEmail(e.target.value)}
                         />
 
                         <Button type="submit">
@@ -105,6 +110,6 @@ class EmailPassword extends Component {
             </AuthWrapper>
         );
     }
-}
+//}
 
 export default withRouter(EmailPassword);
