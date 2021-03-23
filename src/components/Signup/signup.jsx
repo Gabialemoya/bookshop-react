@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './signup.scss';
 
 import {auth, handleUserProfile} from './../../firebase/utils';
-
+import AuthWrapper from './../AuthWrapper/authwrapper';
 import FormInput from './../forms/FormInput/forminput';
 import Button from './../forms/Button/button';
 
@@ -67,10 +67,13 @@ class Signup extends Component {
     render(){
         const {displayName, email, password, confirmPassword, errors} = this.state;
 
+        const configAuthWrapper = {
+            headline: 'Crear cuenta'
+        };
+
         return(
-            <div className="signup">
-                <div className="wrap">
-                    <h2>Signup</h2>
+            <AuthWrapper {...configAuthWrapper}>
+                <div className="formWrap">
 
                     {errors.length >0 &&(
                         <ul>
@@ -84,7 +87,6 @@ class Signup extends Component {
                         </ul>
                     )}
 
-                    <div className="formWrap">
                         <form onSubmit={this.handleFormSubmit}>
                             <FormInput
                                 type="text"
@@ -121,8 +123,7 @@ class Signup extends Component {
                             </Button>
                         </form>
                     </div>
-                </div>
-            </div>
+            </AuthWrapper>
         )
     }
 }
