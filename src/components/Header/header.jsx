@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Logo from './../../assets/logo.png'
 import './header.scss';
 import {Link} from 'react-router-dom';
@@ -19,7 +20,7 @@ const Header = props =>{
 
                 <div className="callToActions">
                     {currentUser && (
-                       <ul>
+                       <ul>  
                            <li>
                                <span onClick={() => auth.signOut()}>
                                    Logout
@@ -53,4 +54,8 @@ Header.defaultProps = {
     currentUser: null
 };
 
-export default Header;
+const mapStateToProps = ({user}) => ({
+    currentUser: user.currentUser
+});
+
+export default connect(mapStateToProps,null)(Header);
