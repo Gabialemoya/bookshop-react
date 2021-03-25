@@ -9,10 +9,10 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 //aca te traigo la autenticacion
-const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 GoogleProvider.setCustomParameters({prompt: 'select_account'});
 //popup es la ventanta emergente
-export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider); //agregue google provider como parametro porque no funcaba
+//export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider); //agregue google provider como parametro porque no funcaba
 
 //guardar datos de logueo
 export const handleUserProfile = async (userAuth, additionalData) =>{

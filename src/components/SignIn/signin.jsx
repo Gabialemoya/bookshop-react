@@ -1,13 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
+import {signInUser, signInWithGoogle, resetAllAuthForms} from './../../redux/User/user.actions';
 
 import './signin.scss';
 import Buttons from './../forms/Button/button';
-import {signInWithGoogle, auth} from './../../firebase/utils';
+//import {signInWithGoogle} from './../../firebase/utils';
 
 // import AuthWrapp from './../../components/AuthWrapper/authwrapper';
 import AuthWrapper from './../AuthWrapper/authwrapper';
 import FormInput from './../forms/FormInput/forminput';
+
+const mapState = ({user}) => ({
+    signInSuccess: user.signInSuccess
+});
 
 // const initialState = {
 //     email: '',
@@ -15,19 +21,19 @@ import FormInput from './../forms/FormInput/forminput';
 // };
 
 const SignIn = props => {
-    //AL NO SER UNA CLASE YA NO HACE FALTA
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         ...initialState
-    //     };
-    //     //binding
-    //     this.handleChange = this.handleChange.bind(this);
-        
-    // }
-
+    
+    const {signInSuccess} = useSelector(mapState);
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    useEffect(() => {
+        if(signInSuccess){
+            resetForm();
+            dispatch(resetAllAuthForms());
+            props.history.push('/');
+        }
+    }, [signInSuccess]); //dependencia a la que se le controla el cambio
 
     //vaciar formulario
     const resetForm = () =>{
@@ -35,40 +41,16 @@ const SignIn = props => {
         setPassword('');
     }
 
-    
-    //SE REEMPLAZA POR REACT HOOKS
-    // handleChange(e){
-    //     const { name, value} = e.target;
-    //     this.setState({
-    //         [name]: value
-    //     });
-    // }
-
-    //esto le saca la funcion al submit del form
-    const handleSubmit = async e =>{
+    const handleSubmit = e =>{
         e.preventDefault();
-        //const {email, password} = this.state;
-
-        try{
-
-            await auth.signInWithEmailAndPassword(email, password);
-            // this.setState({
-            //     ...initialState
-            // });
-            resetForm();
-
-            props.history.push('/');
-
-
-        }catch(err){
-            // console.log(err);
-        }
-
+        dispatch(signInUser({email, password}));
+       
     }
 
-    
-
-        //const {email, password} = this.state;
+    //funcion para arreglar el problema con sign in con google
+    const handleGoogleSignIn = () =>{
+        dispatch(signInWithGoogle());
+    }
 
         //aca le paso el h2 que estaba antes arriba del form
         const configAuthWrapper = {
@@ -104,7 +86,7 @@ const SignIn = props => {
 
                             <div className="socialSignin">
                                 <div className="row">
-                                    <Buttons onClick={signInWithGoogle}>
+                                    <Buttons onClick={handleGoogleSignIn}>
                                         Sign in with Google
                                     </Buttons>
                                 </div>

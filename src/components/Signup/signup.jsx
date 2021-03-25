@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
+import {signUpUser, resetAllAuthForms} from './../../redux/User/user.actions';
 import './signup.scss';
 
-import {auth, handleUserProfile} from './../../firebase/utils';
+// import {auth, handleUserProfile} from './../../firebase/utils';
 import AuthWrapper from './../AuthWrapper/authwrapper';
 import FormInput from './../forms/FormInput/forminput';
 import Button from './../forms/Button/button';
@@ -16,12 +18,34 @@ import Button from './../forms/Button/button';
 //     errors: []
 // };
 
+const mapState = ({user}) => ({
+    signUpSuccess: user.signUpSuccess,
+    signUpError: user.signUpError
+});
+
 const Signup = props => {
+    const {signUpSuccess, signUpError} = useSelector(mapState);
+    const dispatch = useDispatch();
     const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState([]);
+
+    //hook
+    useEffect(() => {
+        if(signUpSuccess){
+            reset();
+            dispatch(resetAllAuthForms());
+            props.history.push('/');
+        }
+    }, [signUpSuccess]);
+
+    useEffect(() => {
+        if(Array.isArray(signUpError) && signUpError.length>0){
+            setErrors(signUpError);
+        }
+    }, [signUpError]);
 
     //vaciar formulario
     const reset = () =>{
@@ -31,60 +55,22 @@ const Signup = props => {
         setConfirmPassword('');
         setErrors([]);
     };
+    
 
-    // constructor(props){
-    //     super(props);
-    //     this.state ={
-    //         ...initialState
-    //     };
-
-    //     this.handleChange = this.handleChange.bind(this);
-    // }
-
-    //metodo para capturar los cambios
-    // handleChange(e){
-    //     const {name, value} = e.target;
-
-    //     this.setState({
-    //         [name]: value
-    //     });
-    // }
-
-   const handleFormSubmit = async event => {
+   const handleFormSubmit = event => {
         event.preventDefault();
-        //const {displayName, email, password, confirmPassword} = this.state;
+        dispatch(signUpUser({
+            displayName,
+            email,
+            password,
+            confirmPassword
+        }));
+        
 
-        //valodacion de password y confirm password
-        if(password !== confirmPassword){
-            const err = ['Las contraseñas no coinciden'];
-            // this.setState({
-            //     errors:err
-            // });
-            setErrors(err);
-            return;
-        }
-
-        try{
-
-            const {user} = await auth.createUserWithEmailAndPassword(email, password);
-
-            await handleUserProfile(user, {displayName});
-
-            //resetear el formulario
-            // this.setState({
-            //     ...initialState
-            // });
-            reset();
-
-            props.history.push('/');
-
-        }catch(err){
-            // console.log(err);
-        }
 
     }
 
-    //render(){
+    
         //const {displayName, email, password, confirmPassword, errors} = this.state;
 
         const configAuthWrapper = {

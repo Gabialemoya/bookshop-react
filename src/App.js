@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {Switch, Route , Redirect} from 'react-router-dom';
 import {auth , handleUserProfile} from './firebase/utils';
 import {setCurrentUser} from './redux/User/user.actions';
@@ -25,33 +25,20 @@ import './default.scss';
 // };
 
 const App = props => {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     ...initialState
-  //   };
-  // }
-
-  //hook
-//determina con auth si un usuario hizo sign in o no
-
-//authLustener = null;
-
-// useEffect va cargando el codigo entre llaves cada vez que el valor entre [] cambia
-
-const {setCurrentUser, currentUser} = props;
+  
+const dispatch = useDispatch();
 
 useEffect(() => {
 
   //subscribed
-  const authLustener = auth.onAuthStateChanged( async userAuth =>{
+  const authListener = auth.onAuthStateChanged( async userAuth =>{
     if(userAuth) {
       const userRef = await handleUserProfile(userAuth);
       userRef.onSnapshot(snapshot => {
-        setCurrentUser({
+        dispatch(setCurrentUser({
             id: snapshot.id,
             ...snapshot.data()
-        });
+        }));
       })
     }
 
@@ -59,13 +46,13 @@ useEffect(() => {
     //   ...initialState
     // });
 
-    setCurrentUser(userAuth);
+    dispatch(setCurrentUser(userAuth));
     
     }); 
 
   return() => {
     //unsuscribed
-     authLustener();
+     authListener();
   };
 }, []);
 
@@ -113,12 +100,12 @@ useEffect(() => {
   }
 //}
 
-const mapStateToProps = ({user}) => ({
-  currentUser:user.currentUser
-});
+// const mapStateToProps = ({user}) => ({
+//   currentUser:user.currentUser
+// });
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-});
+// const mapDispatchToProps = dispatch => ({
+//   setCurrentUser: user => dispatch(setCurrentUser(user))
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

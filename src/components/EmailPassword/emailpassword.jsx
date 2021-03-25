@@ -1,5 +1,7 @@
 //para recuperar la contraseña
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {resetPassword, resetAllAuthForms} from './../../redux/User/user.actions';
 import {withRouter} from 'react-router-dom';
 import './emailpassword.scss';
 
@@ -7,66 +9,38 @@ import AuthWrapper from './../AuthWrapper/authwrapper';
 import FormInput from './../forms/FormInput/forminput';
 import Button from './../forms/Button/button';
 
-import {auth} from './../../firebase/utils';
+//import {auth} from './../../firebase/utils';
 
-// const initialState = {
-//     email: '',
-//     errors: []
-// };
+const mapState = ({user}) => ({
+    resetPasswordSuccess: user.resetPasswordSuccess,
+    resetPasswordError: user.resetPasswordError
+});
 
 const EmailPassword = props => {
+    const {resetPasswordSuccess, resetPasswordError} = useSelector(mapState);
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState([]);
 
+    useEffect(() => {
+        if(resetPasswordSuccess){
+            dispatch(resetAllAuthForms());
+            props.history.push('/login');
+        }
+    }, [resetPasswordSuccess])
 
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         ...initialState
-    //     };
+    useEffect(() => {
+        if(Array.isArray(resetPasswordError) && resetPasswordError.length >0){
+            setErrors(resetPasswordError);
+        }
+    }, [resetPasswordError])
 
-    //     this.handleChange=this.handleChange.bind(this);
-    // }
 
-    // handleChange(e){
-    //     const {name, value} = e.target;
-    //     this.setState({
-    //         [name]:value
-    //     });
-    // }
-
-    const handleSubmit = async (e) =>{
+    const handleSubmit = e =>{
         e.preventDefault(); //previene que se recargue la pagina
 
-        try{
-            //const {email}=this.state;
-            const config ={
-                //pagina a la que mandamos al usuario una vez que 
-                // modifico la contraseña
-                url: 'http://localhost:3000/login'
-            };
-
-            // sendPasswordResetEmail recibe el mail del usuario 
-            // y el objeto de configuracion (config)
-            await auth.sendPasswordResetEmail(email, config)
-            // then -> callback
+        dispatch(resetPassword({email}));
         
-            .then(() => { //en el caso que funcione que hace
-                console.log('Contraseña modificada con exito');
-                props.history.push('/login'); //redirije al login
-            })
-            .catch(() => { //en el caso que falle que hace
-                console.log('No se pudo cambiar la contraseña');
-                const err = ['Cuenta inexistente. Intente de nuevo.'];
-                // this.setState({
-                //     errors:err
-                // });
-                setErrors(err);
-            });
-
-        }catch(err){
-            // console.log(err);
-        }
     }
 
     //render(){
