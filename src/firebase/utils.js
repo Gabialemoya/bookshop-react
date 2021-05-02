@@ -15,7 +15,7 @@ GoogleProvider.setCustomParameters({prompt: 'select_account'});
 //export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider); //agregue google provider como parametro porque no funcaba
 
 //guardar datos de logueo
-export const handleUserProfile = async (userAuth, additionalData) =>{
+export const handleUserProfile = async ({userAuth, additionalData}) =>{
     //usuario valido?
     if(!userAuth) return;
 
@@ -42,5 +42,14 @@ export const handleUserProfile = async (userAuth, additionalData) =>{
         }
 
     }
-    return userRef;
+    return userRef; //info del usuario
 };
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) =>{
+        const unsuscribe = auth.onAuthStateChanged(userAuth =>{
+            unsuscribe();
+            resolve(userAuth);
+        }, reject);
+    })
+}

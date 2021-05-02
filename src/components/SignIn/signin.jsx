@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {Link, withRouter} from 'react-router-dom';
-import {signInUser, signInWithGoogle, resetAllAuthForms} from './../../redux/User/user.actions';
+import {Link, withRouter, useHistory} from 'react-router-dom';
+import {emailSignInStart, signInWithGoogle, resetAllAuthForms, googleSignInStart} from './../../redux/User/user.actions';
 
 import './signin.scss';
 import Buttons from './../forms/Button/button';
@@ -12,28 +12,23 @@ import AuthWrapper from './../AuthWrapper/authwrapper';
 import FormInput from './../forms/FormInput/forminput';
 
 const mapState = ({user}) => ({
-    signInSuccess: user.signInSuccess
+    currentUser: user.currentUser
 });
 
-// const initialState = {
-//     email: '',
-//     password: ''
-// };
-
 const SignIn = props => {
-    
-    const {signInSuccess} = useSelector(mapState);
+    const history = useHistory();
+    const {currentUser} = useSelector(mapState);
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(() => {
-        if(signInSuccess){
+        if(currentUser){
             resetForm();
-            dispatch(resetAllAuthForms());
-            props.history.push('/');
+            //dispatch(resetAllAuthForms());
+            history.push('/');
         }
-    }, [signInSuccess]); //dependencia a la que se le controla el cambio
+    }, [currentUser]); //dependencia a la que se le controla el cambio
 
     //vaciar formulario
     const resetForm = () =>{
@@ -43,13 +38,13 @@ const SignIn = props => {
 
     const handleSubmit = e =>{
         e.preventDefault();
-        dispatch(signInUser({email, password}));
+        dispatch(emailSignInStart({email, password}));
        
     }
 
     //funcion para arreglar el problema con sign in con google
     const handleGoogleSignIn = () =>{
-        dispatch(signInWithGoogle());
+        dispatch(googleSignInStart());
     }
 
         //aca le paso el h2 que estaba antes arriba del form
@@ -104,4 +99,4 @@ const SignIn = props => {
         );
     
 }
-export default withRouter(SignIn);
+export default SignIn;

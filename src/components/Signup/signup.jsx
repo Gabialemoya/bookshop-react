@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {signUpUser, resetAllAuthForms} from './../../redux/User/user.actions';
+import {withRouter, useHistory} from 'react-router-dom';
+import {signUpUser, signUpUserStart} from './../../redux/User/user.actions';
 import './signup.scss';
 
 // import {auth, handleUserProfile} from './../../firebase/utils';
@@ -19,12 +19,16 @@ import Button from './../forms/Button/button';
 // };
 
 const mapState = ({user}) => ({
-    signUpSuccess: user.signUpSuccess,
-    signUpError: user.signUpError
+    currentUser: user.currentUser,
+    useErr: user.useErr
+    //signUpSuccess: user.signUpSuccess,
+   // signUpError: user.signUpError
 });
 
 const Signup = props => {
-    const {signUpSuccess, signUpError} = useSelector(mapState);
+    const history = useHistory();
+    //const {signUpSuccess, signUpError} = useSelector(mapState);
+    const {currentUser, useErr} = useSelector(mapState);
     const dispatch = useDispatch();
     const [displayName, setDisplayName] = useState('');
     const [email, setEmail] = useState('');
@@ -34,18 +38,20 @@ const Signup = props => {
 
     //hook
     useEffect(() => {
-        if(signUpSuccess){
+        if(currentUser){
+        //if(signUpSuccess){
             reset();
-            dispatch(resetAllAuthForms());
-            props.history.push('/');
+         //   dispatch(resetAllAuthForms());
+            history.push('/');
         }
-    }, [signUpSuccess]);
+   // }, [signUpSuccess]);
+    }, [currentUser]);
 
     useEffect(() => {
-        if(Array.isArray(signUpError) && signUpError.length>0){
-            setErrors(signUpError);
+        if(Array.isArray(useErr) && useErr.length>0){
+            setErrors(useErr);
         }
-    }, [signUpError]);
+    }, [useErr]);
 
     //vaciar formulario
     const reset = () =>{
@@ -59,7 +65,7 @@ const Signup = props => {
 
    const handleFormSubmit = event => {
         event.preventDefault();
-        dispatch(signUpUser({
+        dispatch(signUpUserStart({
             displayName,
             email,
             password,
@@ -134,4 +140,4 @@ const Signup = props => {
     }
 //}
 
-export default withRouter(Signup);
+export default Signup;
