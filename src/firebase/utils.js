@@ -28,6 +28,7 @@ export const handleUserProfile = async ({userAuth, additionalData}) =>{
         //datos a guardar en db
         const {displayName, email} = userAuth;
         const timestamp = new Date();
+        const userRoles = ['user'];
 
         //si el documento no existe
         try{
@@ -35,6 +36,7 @@ export const handleUserProfile = async ({userAuth, additionalData}) =>{
                 displayName,
                 email,
                 createdDate: timestamp,
+                userRoles,
                 ...additionalData
             });
         } catch(err){
