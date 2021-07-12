@@ -18,6 +18,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 
 //pages
 import Homepage from './pages/Homepage/homepage';
+import Search from './pages/Search/search';
 import Registration from './pages/Registration/registration';
 import Login from './pages/Login/login';
 import Recovery from './pages/Recovery/recovery';
@@ -46,6 +47,11 @@ useEffect(() =>{
             <HomepageLayout>
               <Homepage/>
             </HomepageLayout>
+          )}/>
+          <Route path="/search" render={() => (
+            <MainLayout>
+              <Search/>
+            </MainLayout>
           )}/>
           <Route path="/registration" 
           render={() => (

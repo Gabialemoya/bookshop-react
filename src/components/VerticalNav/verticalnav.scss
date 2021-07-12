@@ -14,7 +14,7 @@
       ul {
   
         li {
-          width: 25%;
+          width: 100%;
           border-bottom: 1px solid #d3d3d3;
   
           &:first-child {
@@ -23,7 +23,7 @@
   
           a, span {
             display: block;
-            width: 30%;
+            width: 100%;
             padding: 2rem;
             font-size: 1.6rem;
             line-height: 1;
@@ -32,7 +32,10 @@
           }
   
           &:hover {
-            background-color: #d3d3d3;
+            color: white;
+            background-color: rgb(195, 153, 183);
+            
+            transition: all .4s ease-in-out;
           }
         }
   
