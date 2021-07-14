@@ -24,6 +24,7 @@ import Login from './pages/Login/login';
 import Recovery from './pages/Recovery/recovery';
 import Dashboard from './pages/Dashboard/dashboard';
 import Admin from './pages/Admin/admin';
+import ProductDetails from './pages/ProductDetails/productdetails';
 
 import './default.scss';
 
@@ -56,6 +57,11 @@ useEffect(() =>{
           <Route path="/search/:filterType" render={() => (
             <MainLayout>
               <Search/>
+            </MainLayout>
+          )}/>
+          <Route path="/product/:productID" render={() => (
+            <MainLayout>
+              <ProductDetails/>
             </MainLayout>
           )}/>
           <Route path="/registration" 

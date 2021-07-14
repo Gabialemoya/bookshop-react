@@ -4,6 +4,7 @@ import {addProductStart, fetchProductsStart, deleteProductStart} from './../../r
 import Modal from './../../components/Modal/modal';
 import FormInput from './../../components/forms/FormInput/forminput';
 import FormSelect from '../../components/forms/FormSelect/formselect';
+import TextArea from '../../components/forms/TextArea/textarea';
 import Button from './../../components/forms/Button/button';
 import LoadMore from './../../components/LoadMore/loadmore';
 import './admin.scss';
@@ -106,6 +107,9 @@ const Admin = props => {
                         <FormSelect
                             label="Genero"
                             options={[{
+                                name: 'Otros',
+                                value: '',
+                            },{
                                 value: "terror",
                                 name: "Terror"
                             },{
@@ -148,12 +152,18 @@ const Admin = props => {
                             handleChange={e => setProductThumbnail(e.target.value)}
                         />
 
-                        <FormInput
+                        <TextArea
                             label="Sinopsis"
                             type="text"
                             value={productDescription}
                             handleChange={e => setProductDescription(e.target.value)}
                         />
+                        {/* <FormInput
+                            label="Sinopsis"
+                            type="text"
+                            value={productDescription}
+                            handleChange={e => setProductDescription(e.target.value)}
+                        /> */}
 
                         <FormInput
                             label="Price"
