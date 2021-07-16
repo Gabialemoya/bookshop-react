@@ -1,17 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from './../../forms/Button/button';
+import { useDispatch } from 'react-redux';
+import {addProduct} from './../../../redux/Cart/cart.actions';
 
-const Product = ({
-    documentID,
-    productThumbnail, 
-    productName, 
-    productPrice
-}) => {
+const Product = (product) => {
+    const dispatch = useDispatch();
+    const {
+            documentID,
+            productThumbnail, 
+            productName, 
+            productPrice
+    } = product;
     if(!documentID || !productThumbnail || !productName || typeof productPrice === 'undefined') return null;
 
     const configAddToCartBtn = {
         tyoe: "button"
+    };
+
+    const handleAddToCart = (product) => {
+        if (!product) return;
+        dispatch(
+            addProduct(product)
+        )
     };
 
     return(
@@ -37,7 +48,7 @@ const Product = ({
                     </li>
                     <li>
                         <div className="addToCart">
-                            <Button {...configAddToCartBtn}>
+                            <Button {...configAddToCartBtn} onClick={() => handleAddToCart(product)}>
                                 Añadir al carrito
                             </Button>   
                         </div>

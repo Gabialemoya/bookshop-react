@@ -53,6 +53,16 @@
               text-transform: uppercase;
               cursor: pointer;
             }
+
+            a:hover {
+              color: rgb(155, 66, 128);
+            }
+  
+            span:hover {
+              color: rgb(155, 66, 128);
+            }
+
+
           }
         }
       }
@@ -89,6 +99,14 @@
             text-decoration: none;
             text-transform: uppercase;
             cursor: pointer;
+          }
+
+          a:hover {
+            color: rgb(155, 66, 128);
+          }
+
+          span:hover {
+            color: rgb(155, 66, 128);
           }
   
         }

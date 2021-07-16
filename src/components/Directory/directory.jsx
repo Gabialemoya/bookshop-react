@@ -13,7 +13,7 @@ const Directory = props =>{
                         backgroundImage: `url(${Clasicos})`
                     }
                 }>
-                    <a href="/">
+                    <a className="btnInicio" href="/">
                         Ir al Bookshop
                     </a>
                 </div>

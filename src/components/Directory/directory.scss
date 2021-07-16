@@ -27,7 +27,7 @@
         }
 
         a{
-            color: black;
+            color: rgb(155, 66, 128);
             position:absolute;
             top:50%;
             left: 50%;
@@ -39,9 +39,10 @@
             line-height: 1;
             font-weight: 400;
             text-transform: uppercase;
-            background: rgba(255, 255, 255, .9);
+            background: white;
             padding: 10px 15px;
-            border: 1px solid black;
+            border: 1px solid rgb(155, 66, 128);
+            border-radius: 15px;
 
         }
     }
