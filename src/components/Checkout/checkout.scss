@@ -1,0 +1,53 @@
+.checkout{
+    margin: 20px;
+
+    h1{
+        display: block;
+        width: 100%;
+    }
+
+    h1, p{
+        text-align: center;
+    }
+
+    .checkoutHeader{
+        border-bottom: 1px solid black;
+    }
+
+    .cart{
+        width: 1000px;
+        margin: 0 auto;
+
+        table{
+            width: 100%;
+        }
+    }
+
+    .checkoutHeader,
+    .cart{
+        width: 100%;
+        text-align: left;
+
+        th,
+        td{
+           width: 22%; 
+        }
+    }
+
+    .cartItem{
+        td{
+            text-align: left;
+        }
+        td img{
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .cartBtn{
+        cursor: pointer;
+        :hover{
+            color: rgb(155, 66, 128);
+        }
+    }
+}

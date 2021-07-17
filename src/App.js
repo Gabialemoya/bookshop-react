@@ -16,7 +16,7 @@ import HomepageLayout from './layouts/HomepageLayout';
 import AdminLayout from './layouts/AdminLayout';
 import DashboardLayout from './layouts/DashboardLayout';
 
-//pages
+//paginas
 import Homepage from './pages/Homepage/homepage';
 import Search from './pages/Search/search';
 import Registration from './pages/Registration/registration';
@@ -25,6 +25,7 @@ import Recovery from './pages/Recovery/recovery';
 import Dashboard from './pages/Dashboard/dashboard';
 import Admin from './pages/Admin/admin';
 import ProductDetails from './pages/ProductDetails/productdetails';
+import Cart from './pages/Cart/cart';
 
 import './default.scss';
 
@@ -62,6 +63,12 @@ useEffect(() =>{
           <Route path="/product/:productID" render={() => (
             <MainLayout>
               <ProductDetails/>
+            </MainLayout>
+          )}/>
+          <Route path="/cart" 
+          render={() => (
+            <MainLayout >
+              <Cart/>
             </MainLayout>
           )}/>
           <Route path="/registration" 

@@ -13,4 +13,12 @@
     border: 0;
     outline: none;
     cursor: pointer;
+
+    
 }
+
+button:hover{
+    background: rgb(200, 151, 185);
+    transition: all .4s ease-in-out;
+}
+
