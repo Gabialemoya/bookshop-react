@@ -66,7 +66,6 @@ const Admin = props => {
                 productThumbnail,
                 productDescription,
                 productPrice
-
             })
         );
         resetForm();

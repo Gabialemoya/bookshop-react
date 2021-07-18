@@ -24,8 +24,10 @@ import Login from './pages/Login/login';
 import Recovery from './pages/Recovery/recovery';
 import Dashboard from './pages/Dashboard/dashboard';
 import Admin from './pages/Admin/admin';
+import ConfirmPage from './pages/ConfirmPage/confirmpage';
 import ProductDetails from './pages/ProductDetails/productdetails';
 import Cart from './pages/Cart/cart';
+import Payment from './pages/Payment/payment';
 
 import './default.scss';
 
@@ -55,6 +57,11 @@ useEffect(() =>{
               <Search/>
             </MainLayout>
           )}/>
+          <Route exact path="/confirm" render={() => (
+            <MainLayout>
+              <ConfirmPage/>
+            </MainLayout>
+          )}/>
           <Route path="/search/:filterType" render={() => (
             <MainLayout>
               <Search/>
@@ -70,6 +77,14 @@ useEffect(() =>{
             <MainLayout >
               <Cart/>
             </MainLayout>
+          )}/>
+          <Route path="/payment" 
+          render={() => (
+            <WithAuth >
+              <MainLayout>
+                <Payment/>
+              </MainLayout>
+            </WithAuth>
           )}/>
           <Route path="/registration" 
           render={() => (
