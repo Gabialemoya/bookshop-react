@@ -4,6 +4,7 @@ import {CardElement, useStripe, useElements} from '@stripe/react-stripe-js';
 import FormInput from '../../components/forms/FormInput/forminput';
 import Button from '../../components/forms/Button/button';
 import { CountryDropdown } from 'react-country-region-selector';
+import { saveOrderHistory } from '../../redux/Orders/orders.actions';
 import { apiInstance } from '../../Utils/utils';
 //import { selectCartTotal } from '../../redux/Cart/cart.selectors';
 //import { createStructuredSelector } from 'reselect';
@@ -64,7 +65,7 @@ const PaymentDetails = () => {
 
     useEffect(() => {
         if(itemCount<1){
-            history.push('/');
+            history.push('/dashboard');
         }
     }, [itemCount]);
 
@@ -89,17 +90,34 @@ const PaymentDetails = () => {
     
         emailjs.sendForm('gmail', 'template_kxfrt04', e.target, 'user_h5yxuThnXFLMgSHZkIOFX')
           .then((result) => {
-              dispatch(
-                  clearCart()
-              )
+            //   dispatch(
+            //       clearCart()
+            //   )
           }, (error) => {
               console.log(error.text);
           });
           e.target.reset();
+
+          const configOrder = {
+              orderTotal: total,
+              orderItems: cartItems.map(item => {
+                  const { documentID, productName, productAuthor, 
+                    productPrice, quantity} = item;
+
+                    return {
+                        documentID,
+                        productName,
+                        productAuthor,
+                        productPrice,
+                        quantity
+                      };
+              })
+          }
+
           dispatch(
-            clearCart()
+            saveOrderHistory(configOrder)
         )
-          history.push('/confirm');
+          //history.push('/confirm');
     } 
     const resetForm = () => {
         setRecipientName('');

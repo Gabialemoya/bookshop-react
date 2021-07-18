@@ -25,6 +25,7 @@ import Recovery from './pages/Recovery/recovery';
 import Dashboard from './pages/Dashboard/dashboard';
 import Admin from './pages/Admin/admin';
 import ConfirmPage from './pages/ConfirmPage/confirmpage';
+import Order from './pages/Order/order';
 import ProductDetails from './pages/ProductDetails/productdetails';
 import Cart from './pages/Cart/cart';
 import Payment from './pages/Payment/payment';
@@ -108,6 +109,14 @@ useEffect(() =>{
             <WithAuth>
             <DashboardLayout>
               <Dashboard/>
+            </DashboardLayout>
+            </WithAuth>
+          )}
+          />
+          <Route path="/order/:orderID" render={() => (
+            <WithAuth>
+            <DashboardLayout>
+              <Order/>
             </DashboardLayout>
             </WithAuth>
           )}
