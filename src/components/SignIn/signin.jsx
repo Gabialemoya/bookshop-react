@@ -1,102 +1,137 @@
-import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Link, withRouter, useHistory} from 'react-router-dom';
-import {emailSignInStart, signInWithGoogle, resetAllAuthForms, googleSignInStart} from './../../redux/User/user.actions';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, withRouter, useHistory } from "react-router-dom";
+import {
+  emailSignInStart,
+  signInWithGoogle,
+  resetAllAuthForms,
+  googleSignInStart,
+} from "./../../redux/User/user.actions";
 
-import './signin.scss';
-import Buttons from './../forms/Button/button';
+import "./signin.scss";
+import Buttons from "./../forms/Button/button";
 //import {signInWithGoogle} from './../../firebase/utils';
 
 // import AuthWrapp from './../../components/AuthWrapper/authwrapper';
-import AuthWrapper from './../AuthWrapper/authwrapper';
-import FormInput from './../forms/FormInput/forminput';
+import AuthWrapper from "./../AuthWrapper/authwrapper";
+import FormInput from "./../forms/FormInput/forminput";
 
-const mapState = ({user}) => ({
-    currentUser: user.currentUser
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser,
 });
 
-const SignIn = props => {
-    const history = useHistory();
-    const {currentUser} = useSelector(mapState);
-    const dispatch = useDispatch();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const SignIn = (props) => {
+  const history = useHistory();
+  const { currentUser } = useSelector(mapState);
+  const dispatch = useDispatch();
+  const [signIn, setSignIn] = useState({
+    email: "",
+    password: "",
+  });
+  /*  const [email, setEmail] = useState('');
+    const [password, setPassword] = useState(''); */
+  const [errors, setErrors] = useState("");
 
-    useEffect(() => {
-        if(currentUser){
-            resetForm();
-            //dispatch(resetAllAuthForms());
-            history.push('/');
+  useEffect(() => {
+    if (currentUser) {
+      resetForm();
+      //dispatch(resetAllAuthForms());
+      history.push("/");
+    }
+  }, [currentUser]); //dependencia a la que se le controla el cambio
+
+  //vaciar formulario
+  const resetForm = () => {
+    setSignIn({ email: "", password: "" });
+  };
+
+  const validationSchema = {
+    email: { required: true },
+    password: { required: true },
+  };
+
+  const isValid = () => {
+    let valid = true;
+    let errors = {};
+
+    for (let key of Object.keys(signIn)) {
+      let value = signIn[key];
+
+      if (validationSchema[key].required) {
+        if (value === "") {
+          errors[key] = "Campo requerido";
+          setErrors(errors);
+          valid = false;
         }
-    }, [currentUser]); //dependencia a la que se le controla el cambio
-
-    //vaciar formulario
-    const resetForm = () =>{
-        setEmail('');
-        setPassword('');
+      }
     }
+    return valid;
+  };
 
-    const handleSubmit = e =>{
-        e.preventDefault();
-        dispatch(emailSignInStart({email, password}));
-       
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (isValid()) {
+      dispatch(
+        emailSignInStart({ email: signIn.email, password: signIn.password })
+      );
     }
+  };
 
-    //funcion para arreglar el problema con sign in con google
-    const handleGoogleSignIn = () =>{
-        dispatch(googleSignInStart());
-    }
+  const handleChange = (e) => {
+    setSignIn({ ...signIn, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
+  };
 
-        //aca le paso el h2 que estaba antes arriba del form
-        const configAuthWrapper = {
-            headline: 'Inicia sesion'
-        };
+  //funcion para arreglar el problema con sign in con google
+  const handleGoogleSignIn = () => {
+    dispatch(googleSignInStart());
+  };
 
-        return(
-            <AuthWrapper {...configAuthWrapper}>
-                <div className="formWrap">
-                        <form onSubmit={handleSubmit}>
+  //aca le paso el h2 que estaba antes arriba del form
+  const configAuthWrapper = {
+    headline: "Inicia sesion",
+  };
 
-                            <FormInput
-                                type="email"
-                                name="email"
-                                value={email}
-                                placeholder="Ingrese su email"
-                                handleChange={e => setEmail(e.target.value)}
-                            />
+  return (
+    <AuthWrapper {...configAuthWrapper}>
+      <div className="formWrap">
+        <form onSubmit={handleSubmit}>
+          <FormInput
+            type="email"
+            name="email"
+            value={signIn.email}
+            placeholder="Ingrese su email"
+            handleChange={handleChange}
+          />
+          {errors.email && <p className="error-required">{errors.password}</p>}
 
-                            <FormInput
-                                type="password"
-                                name="password"
-                                value={password}
-                                placeholder="Ingrese su contraseña"
-                                handleChange={e => setPassword(e.target.value)}
-                            />
+          <FormInput
+            type="password"
+            name="password"
+            value={signIn.password}
+            placeholder="Ingrese su contraseña"
+            handleChange={handleChange}
+          />
+          {errors.password && (
+            <p className="error-required">{errors.password}</p>
+          )}
 
-                            <Buttons type="submit">
-                                LogIn
-                            </Buttons>      
+          <Buttons type="submit">LogIn</Buttons>
 
-                            
+          <div className="socialSignin">
+            <div className="row">
+              <Buttons onClick={handleGoogleSignIn}>
+                Sign in with Google
+              </Buttons>
+            </div>
+          </div>
 
-                            <div className="socialSignin">
-                                <div className="row">
-                                    <Buttons onClick={handleGoogleSignIn}>
-                                        Sign in with Google
-                                    </Buttons>
-                                </div>
-                            </div>
-
-                            <div className="links">
-                                <Link to='/recovery'>
-                                    ¿Olvidaste tu contraseña?
-                                </Link>
-                            </div>
-
-                        </form>
-                    </div>
-            </AuthWrapper>
-        );
-    
-}
+          <div className="links">
+            <Link to="/recovery">¿Olvidaste tu contraseña?</Link>
+          </div>
+        </form>
+      </div>
+    </AuthWrapper>
+  );
+};
 export default SignIn;

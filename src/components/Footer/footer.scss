@@ -1,10 +1,7 @@
 .footer {
-  .wrap {
-    // width: 100%;
-    /*  max-width: 1450px;
-      padding: 20px 10px;
-      margin: 0 auto; */
-    margin-top: auto;
-    padding: 1em;
-  }
+  height: 10rem;
+  box-shadow: 0 0 4px 2px rgb(0 0 0 / 10%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
