@@ -1,20 +1,22 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import {Switch, Route} from 'react-router-dom';
-import {checkUserSession} from './redux/User/user.actions';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { Switch, Route } from "react-router-dom";
+import { checkUserSession } from "./redux/User/user.actions";
+import { useToasts } from "react-toast-notifications";
 
 //components
-import AdminToolbar from './components/AdminToolbar/adminToolbar';
+import AdminToolbar from "./components/AdminToolbar/adminToolbar";
 
 //hoc
-import WithAuth from './hoc/withAuth';
-import WithAdminAuth from './hoc/withAdminAuth';
+import WithAuth from "./hoc/withAuth";
+import WithAdminAuth from "./hoc/withAdminAuth";
 
 //layouts
-import MainLayout from './layouts/MainLayout';
-import HomepageLayout from './layouts/HomepageLayout';
-import AdminLayout from './layouts/AdminLayout';
-import DashboardLayout from './layouts/DashboardLayout';
+import MainLayout from "./layouts/MainLayout";
+import HomepageLayout from "./layouts/HomepageLayout";
+import AdminLayout from "./layouts/AdminLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
 
 //paginas
 import Homepage from './pages/Homepage/homepage';
@@ -31,114 +33,162 @@ import Cart from './pages/Cart/cart';
 import Payment from './pages/Payment/payment';
 import Result from './pages/Result/result';
 
-import './default.scss';
+
+import "./default.scss";
 
 // const initialState = {
 //   currentUser: null
 // };
 
-const App = props => {
-  
-const dispatch = useDispatch();
+const mapState = ({ uiData }) => ({
+  msgInfo: uiData.msgInfo,
+});
 
-useEffect(() =>{
-  dispatch(checkUserSession());
-}, []);
+const App = (props) => {
+  const { addToast } = useToasts();
+  const dispatch = useDispatch();
 
-    return (
-      <div className="App">
-        <AdminToolbar/>
-       <Switch>
-          <Route exact path="/" render={() => (
+  const { msgInfo } = useSelector(mapState);
+
+  /* 
+  const msgInfo = useSelector((st) => st.ui.msgInfo); */
+
+  useEffect(() => {
+    if (msgInfo)
+      addToast(msgInfo.msg, { appearance: msgInfo.type, autoDismiss: true });
+    dispatch(checkUserSession());
+  }, [dispatch, addToast, msgInfo]);
+
+  return (
+    <div className="App">
+      <AdminToolbar />
+      <Switch>
+        <Route
+          exact
+          path="/"
+          render={() => (
             <HomepageLayout>
-              <Homepage/>
+              <Homepage />
             </HomepageLayout>
-          )}/>
-          <Route exact path="/search" render={() => (
+          )}
+        />
+        <Route
+          exact
+          path="/search"
+          render={() => (
             <MainLayout>
-              <Search/>
+              <Search />
             </MainLayout>
-          )}/>
-          <Route exact path="/confirm" render={() => (
+          )}
+        />
+        <Route
+          exact
+          path="/confirm"
+          render={() => (
             <MainLayout>
-              <ConfirmPage/>
+              <ConfirmPage />
             </MainLayout>
-          )}/>
-          <Route exact path="/search/:filterType" render={() => (
-            <MainLayout>
-              <Search/>
-            </MainLayout>
-          )}/>
+        )}/>
+          
+          <Route exact path="/search/:filterType" 
+          render={() => (
+              <MainLayout>
+                <Search />
+              </MainLayout>
+            
+          )}
+        />
+
           <Route exact path="/search/results/:searchType" render={() => (
             <MainLayout>
               <Result/>
             </MainLayout>
           )}/>
-          <Route path="/product/:productID" render={() => (
+         
+        <Route
+          path="/product/:productID"
+          render={() => (
             <MainLayout>
-              <ProductDetails/>
+              <ProductDetails />
             </MainLayout>
-          )}/>
-          <Route path="/cart" 
+          )}
+        />
+        <Route
+          path="/cart"
           render={() => (
-            <MainLayout >
-              <Cart/>
+            <MainLayout>
+              <Cart />
             </MainLayout>
-          )}/>
-          <Route path="/payment" 
+          )}
+        />
+        <Route
+          path="/payment"
           render={() => (
-            <WithAuth >
+            <WithAuth>
               <MainLayout>
-                <Payment/>
+                <Payment />
               </MainLayout>
             </WithAuth>
-          )}/>
-          <Route path="/registration" 
+          )}
+        />
+        <Route
+          path="/registration"
           render={() => (
-            <MainLayout >
-              <Registration/>
-            </MainLayout>
-          )}/>
-          <Route path="/login" 
-            render={() => (
-              <MainLayout>
-                <Login/>
-              </MainLayout>
-          )}/>
-          <Route path="/recovery" render={() => (
             <MainLayout>
-              <Recovery/>
+              <Registration />
             </MainLayout>
           )}
-          />
-          <Route path="/dashboard" render={() => (
+        />
+        <Route
+          path="/login"
+          render={() => (
+            <MainLayout>
+              <Login />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/recovery"
+          render={() => (
+            <MainLayout>
+              <Recovery />
+            </MainLayout>
+          )}
+        />
+        <Route
+          path="/dashboard"
+          render={() => (
             <WithAuth>
-            <DashboardLayout>
-              <Dashboard/>
-            </DashboardLayout>
+              <DashboardLayout>
+                <Dashboard />
+              </DashboardLayout>
             </WithAuth>
           )}
-          />
-          <Route path="/order/:orderID" render={() => (
+        />
+        <Route
+          path="/order/:orderID"
+          render={() => (
             <WithAuth>
-            <DashboardLayout>
-              <Order/>
-            </DashboardLayout>
+              <DashboardLayout>
+                <Order />
+              </DashboardLayout>
             </WithAuth>
           )}
-          />
-           <Route path="/admin" render={() => (
-             <WithAdminAuth>
+        />
+        <Route
+          path="/admin"
+          render={() => (
+            <WithAdminAuth>
               <AdminLayout>
-                <Admin/>
+                <Admin />
               </AdminLayout>
             </WithAdminAuth>
           )}
-          />
-        </Switch>
-      </div>
-    );
-  }
+        />
+      </Switch>
+    </div>
+  );
+};
 //}
 
 // const mapStateToProps = ({user}) => ({
