@@ -90,9 +90,9 @@ const PaymentDetails = () => {
     
         emailjs.sendForm('gmail', 'template_kxfrt04', e.target, 'user_h5yxuThnXFLMgSHZkIOFX')
           .then((result) => {
-            //   dispatch(
-            //       clearCart()
-            //   )
+              dispatch(
+                  clearCart()
+              )
           }, (error) => {
               console.log(error.text);
           });
@@ -116,9 +116,15 @@ const PaymentDetails = () => {
 
           dispatch(
             saveOrderHistory(configOrder)
+           
         )
-          //history.push('/confirm');
+          history.push('/confirm');
     } 
+
+
+
+
+
     const resetForm = () => {
         setRecipientName('');
         setRecipientMail('');
@@ -130,6 +136,11 @@ const PaymentDetails = () => {
         setNameOnCard('');
     }
     const handleFormSubmit = async evt => {
+        evt.preventDefault();
+
+        apiInstance.post('/send-email',{
+            
+        })
 //         evt.preventDefault();
     
 
