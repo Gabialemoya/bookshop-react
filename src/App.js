@@ -29,6 +29,7 @@ import Order from './pages/Order/order';
 import ProductDetails from './pages/ProductDetails/productdetails';
 import Cart from './pages/Cart/cart';
 import Payment from './pages/Payment/payment';
+import Result from './pages/Result/result';
 
 import './default.scss';
 
@@ -63,9 +64,14 @@ useEffect(() =>{
               <ConfirmPage/>
             </MainLayout>
           )}/>
-          <Route path="/search/:filterType" render={() => (
+          <Route exact path="/search/:filterType" render={() => (
             <MainLayout>
               <Search/>
+            </MainLayout>
+          )}/>
+          <Route exact path="/search/results/:searchType" render={() => (
+            <MainLayout>
+              <Result/>
             </MainLayout>
           )}/>
           <Route path="/product/:productID" render={() => (

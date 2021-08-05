@@ -5,6 +5,11 @@ export const addProductStart = productData => ({
     payload: productData
 });
 
+export const searchProductStart = searchTerm => ({
+    type: productsTypes.SEARCH_PRODUCT_START,
+    payload: searchTerm
+})
+
 export const fetchProductsStart = (filters={}) => ({
     type: productsTypes.FETCH_PRODUCTS_START,
     payload: filters
