@@ -5,6 +5,11 @@ export const addProductStart = (productData) => ({
   payload: productData,
 });
 
+export const searchProductStart = (searchTerm) => ({
+  type: productsTypes.SEARCH_PRODUCT_START,
+  payload: searchTerm,
+});
+
 export const fetchProductsStart = (filters = {}) => ({
   type: productsTypes.FETCH_PRODUCTS_START,
   payload: filters,
@@ -30,7 +35,7 @@ export const setProduct = (product) => ({
   payload: product,
 });
 
-export const editProductsStart = (products) => ({
-  type: productsTypes.EDIT_PRODUCTS_START,
-  payload: products,
+export const editProductStart = (product) => ({
+  type: productsTypes.EDIT_PRODUCT_START,
+  payload: product,
 });

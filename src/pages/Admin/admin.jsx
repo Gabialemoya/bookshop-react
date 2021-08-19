@@ -4,6 +4,7 @@ import {
   addProductStart,
   fetchProductsStart,
   deleteProductStart,
+  editProductStart,
   setProduct,
 } from "./../../redux/Products/products.actions";
 import Modal from "./../../components/Modal/modal";
@@ -24,6 +25,7 @@ const Admin = (props) => {
 
   const dispatch = useDispatch();
   const [hideModal, setHideModal] = useState(true);
+  const [productId, setProductId] = useState(0);
   const [productCategory, setProductCategory] = useState("");
   const [productISBN, setProductISBN] = useState("");
   const [productName, setProductName] = useState("");
@@ -31,43 +33,45 @@ const Admin = (props) => {
   const [productThumbnail, setProductThumbnail] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState(0);
-  const [book, setBook] = useState({});
 
   const { data, queryDoc, isLastPage } = products;
 
   useEffect(() => {
     dispatch(fetchProductsStart());
-    setBook({});
   }, [dispatch]);
 
   const toggleModal = () => setHideModal(!hideModal);
 
-  const resetForm = () => {
-    setHideModal(true);
-    setProductCategory("");
-    setProductISBN("");
-    setProductName("");
-    setProductAuthor("");
-    setProductThumbnail("");
-    setProductDescription("");
-    setProductPrice(0);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(
-      addProductStart({
-        productCategory,
-        productISBN,
-        productName,
-        productAuthor,
-        productThumbnail,
-        productDescription,
-        productPrice,
-      })
-    );
-    resetForm();
+    if (productId === 0) {
+      dispatch(
+        addProductStart({
+          productCategory,
+          productISBN,
+          productName,
+          productAuthor,
+          productThumbnail,
+          productDescription,
+          productPrice,
+        })
+      );
+    } else {
+      dispatch(
+        editProductStart({
+          productId,
+          productCategory,
+          productISBN,
+          productName,
+          productAuthor,
+          productThumbnail,
+          productDescription,
+          productPrice,
+        })
+      );
+    }
+    handleClose();
   };
 
   const handleLoadMore = () => {
@@ -84,14 +88,36 @@ const Admin = (props) => {
   };
 
   const editProduct = (product) => {
-    console.log(product);
-    setHideModal(!hideModal);
-    setBook(product);
-    //dispatch(editProductStart(product))
+    toggleModal();
+    const {
+      documentID,
+      productAuthor,
+      productCategory,
+      productDescription,
+      productISBN,
+      productName,
+      productPrice,
+      productThumbnail,
+    } = product;
+    setProductId(documentID);
+    setProductCategory(productCategory);
+    setProductISBN(productISBN);
+    setProductName(productName);
+    setProductAuthor(productAuthor);
+    setProductThumbnail(productThumbnail);
+    setProductDescription(productDescription);
+    setProductPrice(productPrice);
   };
 
   const handleClean = () => {
-    setBook({});
+    setHideModal(true);
+    setProductCategory("");
+    setProductISBN("");
+    setProductName("");
+    setProductAuthor("");
+    setProductThumbnail("");
+    setProductDescription("");
+    setProductPrice(0);
   };
 
   const handleClose = () => {
@@ -118,14 +144,11 @@ const Admin = (props) => {
       <Modal {...configModal}>
         <div className="addNewProductForm">
           <form onSubmit={handleSubmit}>
-            <h2>
-              {Object.keys(book).length === 0
-                ? "Añadir nuevo libro"
-                : "Editar libro"}
-            </h2>
+            <h2>{productId === 0 ? "Añadir nuevo libro" : "Editar libro"}</h2>
 
             <FormSelect
               label="Genero"
+              value={productCategory}
               options={[
                 {
                   name: "Otros",
@@ -184,12 +207,6 @@ const Admin = (props) => {
               value={productDescription}
               handleChange={(e) => setProductDescription(e.target.value)}
             />
-            {/* <FormInput
-                            label="Sinopsis"
-                            type="text"
-                            value={productDescription}
-                            handleChange={e => setProductDescription(e.target.value)}
-                        /> */}
 
             <FormInput
               label="Price"
@@ -201,7 +218,10 @@ const Admin = (props) => {
               handleChange={(e) => setProductPrice(e.target.value)}
             />
 
-            <Button type="submit">Agregar Libro</Button>
+            <Button type="submit">
+              {" "}
+              {productId === 0 ? "Agregar libro" : "Editar libro"}
+            </Button>
           </form>
         </div>
         <Button onClick={() => handleClose()}>Cancelar</Button>
