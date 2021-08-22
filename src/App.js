@@ -32,6 +32,7 @@ import ProductDetails from './pages/ProductDetails/productdetails';
 import Cart from './pages/Cart/cart';
 import Payment from './pages/Payment/payment';
 import Result from './pages/Result/result';
+import Profile from './pages/Profile/profile';
 
 
 import "./default.scss";
@@ -156,12 +157,33 @@ const App = (props) => {
           )}
         />
         <Route
-          path="/dashboard"
+          exact path="/dashboard/profile"
           render={() => (
             <WithAuth>
               <DashboardLayout>
-                <Dashboard />
+                <Profile />
               </DashboardLayout>
+            </WithAuth>
+          )}
+        />
+        <Route
+          exact path="/dashboard"
+          render={() => (
+            <WithAuth>
+              <DashboardLayout>
+                
+              </DashboardLayout>
+            </WithAuth>
+          )}
+        />
+        <Route
+          exact path="/dashboard/history"
+          render={() => (
+            <WithAuth>
+              <DashboardLayout>
+              <Dashboard/>
+              </DashboardLayout>
+
             </WithAuth>
           )}
         />

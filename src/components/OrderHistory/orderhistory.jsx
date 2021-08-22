@@ -5,6 +5,7 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
+import Button from '../forms/Button/button';
 
 const columns = [
   {
@@ -18,6 +19,10 @@ const columns = [
   {
     id: 'orderTotal',
     lable: 'Monto'
+  },
+  {
+    id: 'detalles',
+    lable: ' '
   }
 ];
 
@@ -32,7 +37,9 @@ const formatText = (columnName, columnValue) => {
     case 'orderTotal':
       return `$${columnValue}`;
     case 'orderCreatedDate':
-      return moment(columnValue.nano).format('DD/MM/YYYY')
+      return moment(columnValue.nano).format('DD/MM/YYYY');
+    case 'detalles':
+      return <Button>ver detalles</Button>
     default:
       return columnValue;
   }

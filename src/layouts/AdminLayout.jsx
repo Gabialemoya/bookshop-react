@@ -23,14 +23,10 @@ const AdminLayout = props => {
             <ul>
               <li>
                 <Link to="/admin">
-                  Home
+                  Gestionar Productos
                 </Link>
               </li>
-              <li>
-                <span className="signOut" onClick={() => signOut()}>
-                  Sign Out
-                </span>
-              </li>
+             
             </ul>
           </VerticalNav>
         </div>

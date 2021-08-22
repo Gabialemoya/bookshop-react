@@ -81,7 +81,7 @@ const Signup = (props) => {
   };
 
   const configAuthWrapper = {
-    headline: "Crear cuenta",
+    headline: "Registrarse",
   };
 
   return (
@@ -126,7 +126,7 @@ const Signup = (props) => {
           />
 
           {/* no usar una contraseña demasiado corta porque se rompe */}
-          <Button type="submit">Register</Button>
+          <Button type="submit">Crear cuenta</Button>
         </form>
       </div>
     </AuthWrapper>

@@ -89,7 +89,7 @@ const SignIn = (props) => {
 
   //aca le paso el h2 que estaba antes arriba del form
   const configAuthWrapper = {
-    headline: "Inicia sesion",
+    headline: "Ingresar",
   };
 
   return (
@@ -116,12 +116,12 @@ const SignIn = (props) => {
             <p className="error-required">{errors.password}</p>
           )}
 
-          <Buttons type="submit">LogIn</Buttons>
+          <Buttons type="submit">Iniciar sesión</Buttons>
 
           <div className="socialSignin">
             <div className="row">
               <Buttons onClick={handleGoogleSignIn}>
-                Sign in with Google
+               Iniciar sesión con Google
               </Buttons>
             </div>
           </div>

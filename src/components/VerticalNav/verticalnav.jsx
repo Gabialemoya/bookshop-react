@@ -5,6 +5,7 @@ import './verticalnav.scss';
 
 const mapState = ({user}) => ({
     currentUser: user.currentUser
+
 })
 
 const VerticalNav = ({children}) => {

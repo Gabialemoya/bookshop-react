@@ -34,7 +34,7 @@ const Header = props =>{
                     <ul>
                         <li>
                             <Link to="/">
-                                Home
+                                Inicio
                             </Link>
                         </li>
                         <li>
@@ -62,7 +62,7 @@ const Header = props =>{
                             </li>,
                             <li>
                                 <span onClick={() => signOut()}>
-                                    Logout
+                                    Salir
                                 </span>
                             </li>
                         ]}
@@ -70,12 +70,12 @@ const Header = props =>{
                         {!currentUser && [
                             <li>
                                 <Link to="/registration">
-                                    Register
+                                    Registrarse
                                 </Link>
                             </li>,
                             <li>
                                 <Link to="/login">
-                                    Login
+                                    Iniciar sesion
                                 </Link>
                             </li>   
                         ]}

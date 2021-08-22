@@ -1,0 +1,63 @@
+.userProfile {
+    display: grid;
+    /* width: 100%; */
+    margin: 3rem auto;
+    //margin-left: 3rem;
+    .input-form{
+        display: block;
+        width: 50%;
+        font-size: 1.5rem;
+        line-height: 1;
+        font-weight: 400;
+        text-align: left;
+        padding: 10px 5px;
+        margin: 0;
+        border: 1px solid #9e9e9e;
+        outline: none;
+    }
+    
+       
+        a{
+            width: 100%;
+            font-size: 1.8rem;
+            text-decoration-line: underline;
+            line-height: 1;
+            font-weight: 400;
+            text-transform: uppercase;
+            color: rgb(155, 66, 128);
+            //background: rgb(155, 66, 128);
+            
+           // margin-top: 15px;
+            text-align: center;
+            border: 0;
+           // outline: none;
+            cursor: pointer;
+        
+    }
+  
+    .edit-button{
+        display: block;
+        width: 30%;
+        font-size: 1.8rem;
+        line-height: 1;
+        font-weight: 300;
+        text-transform: uppercase;
+        color: white;
+        background: rgb(155, 66, 128);
+        padding: 1rem;
+        margin-top: 20px;
+        
+        border: 0;
+        outline: none;
+        cursor: pointer;
+
+        .edit-button::hover{
+            background: rgb(200, 151, 185);
+            transition: all .4s ease-in-out;
+        }
+    
+
+    }
+}
+    
+  
