@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { signUpUserStart } from "./../../redux/User/user.actions";
 import "./signup.scss";
+import { regexEmail } from "../../assets/utils/constant";
 
 import AuthWrapper from "./../AuthWrapper/authwrapper";
 import FormInput from "./../forms/FormInput/forminput";
@@ -11,12 +12,12 @@ import Button from "./../forms/Button/button";
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
-  useErr: user.useErr,
+  userErr: user.userErr,
 });
 
-const Signup = (props) => {
+const Signup = () => {
   const history = useHistory();
-  const { currentUser, useErr } = useSelector(mapState);
+  const { currentUser, userErr } = useSelector(mapState);
   const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,19 +25,44 @@ const Signup = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
 
-  //hook
   useEffect(() => {
     if (currentUser) {
       reset();
       history.push("/");
     }
-  }, [currentUser]);
+  }, [currentUser, history]);
 
-  useEffect(() => {
-    if (Array.isArray(useErr) && useErr.length > 0) {
-      setErrors(useErr);
+  /* useEffect(() => {
+    if (Array.isArray(userErr) && userErr.length > 0) {
+      setErrors(userErr);
+    } else {
+      setErrors([]);
     }
-  }, [useErr]);
+  }, [userErr]); */
+
+  const isValidField = () => {
+    let obj = { displayName, email, password, confirmPassword };
+    let valid = true;
+    let errors = {};
+
+    for (let key in obj) {
+      if (obj[key] === "") {
+        errors[key] = "Campo requerido";
+        setErrors(errors);
+        valid = false;
+      } else if (
+        obj[key] !== "" &&
+        key === "email" &&
+        !obj[key].match(regexEmail)
+      ) {
+        errors[key] = "Email incorrecto";
+        setErrors(errors);
+        valid = false;
+      }
+    }
+
+    return valid;
+  };
 
   //vaciar formulario
   const reset = () => {
@@ -49,20 +75,21 @@ const Signup = (props) => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    dispatch(
-      signUpUserStart({
-        displayName,
-        email,
-        password,
-        confirmPassword,
-      })
-    );
-    sendEmail(event);
-    event.target.reset();
+    if (isValidField()) {
+      dispatch(
+        signUpUserStart({
+          displayName,
+          email,
+          password,
+          confirmPassword,
+        })
+      );
+      //sendEmail(event);
+      //reset();
+    }
   };
 
   const sendEmail = (e) => {
-
     emailjs
       .sendForm(
         "gmail",
@@ -87,43 +114,57 @@ const Signup = (props) => {
   return (
     <AuthWrapper {...configAuthWrapper}>
       <div className="formWrap">
-        {errors.length > 0 && (
-          <ul>
-            {errors.map((err, index) => {
-              return <li key={index}>{err}</li>;
-            })}
-          </ul>
-        )}
-
         <form onSubmit={handleFormSubmit}>
           <FormInput
             type="text"
             name="displayName"
             value={displayName}
             placeholder="Ingrese su nombre completo"
-            handleChange={(e) => setDisplayName(e.target.value)}
+            handleChange={(e) => {
+              setDisplayName(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
           />
+          {errors.displayName && (
+            <p className="error-required">{errors.displayName}</p>
+          )}
           <FormInput
-            type="email"
+            type="text"
             name="email"
             value={email}
             placeholder="Ingrese su correo electrónico"
-            handleChange={(e) => setEmail(e.target.value)}
+            handleChange={(e) => {
+              setEmail(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
           />
+          {errors.email && <p className="error-required">{errors.email}</p>}
           <FormInput
             type="password"
             name="password"
             value={password}
             placeholder="Ingrese una contraseña"
-            handleChange={(e) => setPassword(e.target.value)}
+            handleChange={(e) => {
+              setPassword(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
           />
+          {errors.password && (
+            <p className="error-required">{errors.password}</p>
+          )}
           <FormInput
             type="password"
             name="confirmPassword"
             value={confirmPassword}
             placeholder="Confirme la contraseña"
-            handleChange={(e) => setConfirmPassword(e.target.value)}
+            handleChange={(e) => {
+              setConfirmPassword(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
           />
+          {errors.confirmPassword && (
+            <p className="error-required">{errors.confirmPassword}</p>
+          )}
 
           {/* no usar una contraseña demasiado corta porque se rompe */}
           <Button type="submit">Crear cuenta</Button>
@@ -132,6 +173,5 @@ const Signup = (props) => {
     </AuthWrapper>
   );
 };
-//}
 
 export default Signup;

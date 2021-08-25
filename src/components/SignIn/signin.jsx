@@ -103,7 +103,7 @@ const SignIn = (props) => {
             placeholder="Ingrese su email"
             handleChange={handleChange}
           />
-          {errors.email && <p className="error-required">{errors.password}</p>}
+          {errors.email && <p className="error-required">{errors.email}</p>}
 
           <FormInput
             type="password"
@@ -121,7 +121,7 @@ const SignIn = (props) => {
           <div className="socialSignin">
             <div className="row">
               <Buttons onClick={handleGoogleSignIn}>
-               Iniciar sesión con Google
+                Iniciar sesión con Google
               </Buttons>
             </div>
           </div>

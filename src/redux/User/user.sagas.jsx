@@ -91,12 +91,10 @@ export function* signUpUser({
   if (password !== confirmPassword) {
     const err = ["Las contraseñas no coinciden"];
     yield put(userError(err));
-    // dispatch({
-    //     type: userTypes.SIGN_UP_ERROR,
-    //     payload: err
-    // });
-
     return;
+  } else if (password === confirmPassword) {
+    const err = [];
+    yield put(userError(err));
   }
 
   try {
