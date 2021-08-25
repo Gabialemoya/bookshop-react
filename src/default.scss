@@ -78,10 +78,13 @@ a:hover {
   transition: all 0.4s ease-in-out;
 }
 
-.error-required {
-  font-size: 11px;
-  color: red;
+p {
+  font-size: 12px;
   margin: 0;
+}
+
+.error-required {
+  color: red;
 }
 
 .main {

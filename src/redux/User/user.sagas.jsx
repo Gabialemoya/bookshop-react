@@ -88,14 +88,14 @@ export function* onSignOutUserStart() {
 export function* signUpUser({
   payload: { displayName, email, password, confirmPassword },
 }) {
-  if (password !== confirmPassword) {
+  /* if (password !== confirmPassword) {
     const err = ["Las contraseñas no coinciden"];
     yield put(userError(err));
     return;
   } else if (password === confirmPassword) {
     const err = [];
     yield put(userError(err));
-  }
+  } */
 
   try {
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);

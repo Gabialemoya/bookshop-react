@@ -50,14 +50,22 @@ const Signup = () => {
         errors[key] = "Campo requerido";
         setErrors(errors);
         valid = false;
-      } else if (
-        obj[key] !== "" &&
-        key === "email" &&
-        !obj[key].match(regexEmail)
-      ) {
-        errors[key] = "Email incorrecto";
-        setErrors(errors);
-        valid = false;
+      } else {
+        if (key === "email" && !obj[key].match(regexEmail)) {
+          errors[key] = "Email incorrecto";
+          setErrors(errors);
+          valid = false;
+        }
+        if (key === "password" && obj[key].length > 0 && obj[key].length < 6) {
+          /* errors[key] = "La contraseña debe contener al menos 6 caracteres";
+          setErrors(errors); */
+          valid = false;
+        }
+        if (key === "confirmPassword" && obj[key] !== password) {
+          errors[key] = "Las contraseñas no coinciden";
+          setErrors(errors);
+          valid = false;
+        }
       }
     }
 
@@ -84,8 +92,8 @@ const Signup = () => {
           confirmPassword,
         })
       );
-      //sendEmail(event);
-      //reset();
+      sendEmail(event);
+      reset();
     }
   };
 
@@ -143,12 +151,18 @@ const Signup = () => {
             type="password"
             name="password"
             value={password}
+            min="6"
             placeholder="Ingrese una contraseña"
             handleChange={(e) => {
               setPassword(e.target.value);
               setErrors({ ...errors, [e.target.name]: "" });
             }}
           />
+          {password.length > 0 && password.length < 6 && (
+            <p className="error-required">
+              La contraseña debe contener al menos 6 caracteres.
+            </p>
+          )}
           {errors.password && (
             <p className="error-required">{errors.password}</p>
           )}
@@ -156,6 +170,7 @@ const Signup = () => {
             type="password"
             name="confirmPassword"
             value={confirmPassword}
+            min="6"
             placeholder="Confirme la contraseña"
             handleChange={(e) => {
               setConfirmPassword(e.target.value);
@@ -165,8 +180,6 @@ const Signup = () => {
           {errors.confirmPassword && (
             <p className="error-required">{errors.confirmPassword}</p>
           )}
-
-          {/* no usar una contraseña demasiado corta porque se rompe */}
           <Button type="submit">Crear cuenta</Button>
         </form>
       </div>
