@@ -19,21 +19,20 @@ import AdminLayout from "./layouts/AdminLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 
 //paginas
-import Homepage from './pages/Homepage/homepage';
-import Search from './pages/Search/search';
-import Registration from './pages/Registration/registration';
-import Login from './pages/Login/login';
-import Recovery from './pages/Recovery/recovery';
-import Dashboard from './pages/Dashboard/dashboard';
-import Admin from './pages/Admin/admin';
-import ConfirmPage from './pages/ConfirmPage/confirmpage';
-import Order from './pages/Order/order';
-import ProductDetails from './pages/ProductDetails/productdetails';
-import Cart from './pages/Cart/cart';
-import Payment from './pages/Payment/payment';
-import Result from './pages/Result/result';
-import Profile from './pages/Profile/profile';
-
+import Homepage from "./pages/Homepage/homepage";
+import Search from "./pages/Search/search";
+import Registration from "./pages/Registration/registration";
+import Login from "./pages/Login/login";
+import Recovery from "./pages/Recovery/recovery";
+import Dashboard from "./pages/Dashboard/dashboard";
+import Admin from "./pages/Admin/admin";
+import ConfirmPage from "./pages/ConfirmPage/confirmpage";
+import Order from "./pages/Order/order";
+import ProductDetails from "./pages/ProductDetails/productdetails";
+import Cart from "./pages/Cart/cart";
+import Payment from "./pages/Payment/payment";
+import Result from "./pages/Result/result";
+import Profile from "./pages/Profile/profile";
 
 import "./default.scss";
 
@@ -89,23 +88,29 @@ const App = (props) => {
             <MainLayout>
               <ConfirmPage />
             </MainLayout>
-        )}/>
-          
-          <Route exact path="/search/:filterType" 
-          render={() => (
-              <MainLayout>
-                <Search />
-              </MainLayout>
-            
           )}
         />
 
-          <Route exact path="/search/results/:searchType" render={() => (
+        <Route
+          exact
+          path="/search/:filterType"
+          render={() => (
             <MainLayout>
-              <Result/>
+              <Search />
             </MainLayout>
-          )}/>
-         
+          )}
+        />
+
+        <Route
+          exact
+          path="/search/results/:searchType"
+          render={() => (
+            <MainLayout>
+              <Result />
+            </MainLayout>
+          )}
+        />
+
         <Route
           path="/product/:productID"
           render={() => (
@@ -157,7 +162,8 @@ const App = (props) => {
           )}
         />
         <Route
-          exact path="/dashboard/profile"
+          exact
+          path="/dashboard/profile"
           render={() => (
             <WithAuth>
               <DashboardLayout>
@@ -167,23 +173,22 @@ const App = (props) => {
           )}
         />
         <Route
-          exact path="/dashboard"
+          exact
+          path="/dashboard"
           render={() => (
             <WithAuth>
-              <DashboardLayout>
-                
-              </DashboardLayout>
+              <DashboardLayout></DashboardLayout>
             </WithAuth>
           )}
         />
         <Route
-          exact path="/dashboard/history"
+          exact
+          path="/dashboard/history"
           render={() => (
             <WithAuth>
               <DashboardLayout>
-              <Dashboard/>
+                <Dashboard />
               </DashboardLayout>
-
             </WithAuth>
           )}
         />
