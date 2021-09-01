@@ -35,7 +35,7 @@ export function* saveOrder({ payload }) {
     )
 
   } catch (err) {
-    // console.log(err);
+    console.log(err);
   }
 };
 
@@ -52,7 +52,7 @@ export function* getOrderDetails({ payload }) {
     )
 
   } catch (err) {
-    // console.log(err);
+    console.log(err);
   }
 }
 

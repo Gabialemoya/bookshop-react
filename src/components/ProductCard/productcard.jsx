@@ -1,100 +1,69 @@
-import React, {useEffect} from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductStart, setProduct } from '../../redux/Products/products.actions';
-import { addProduct } from '../../redux/Cart/cart.actions';
-import Button from '../forms/Button/button';
-import './productcard.scss';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const mapState = state => ({
-    product: state.productsData.product
-});
+import { addProduct } from "../../redux/Cart/cart.actions";
+import Button from "../forms/Button/button";
+import "./productcard.scss";
 
-const ProductCard = ({}) =>{
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const {productID} = useParams();
-    const {product} = useSelector(mapState);
+const ProductCard = ({ book }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const {
-        //datos a mostrar en el detalle
-        productThumbnail,
-        productName,
-        productAuthor,
-        productDescription,
-        productPrice,
-        productISBN
-    } = product;
+  const {
+    productThumbnail,
+    productName,
+    productAuthor,
+    productDescription,
+    productPrice,
+    productISBN,
+  } = book;
 
-    useEffect(() => {
-        dispatch(
-            fetchProductStart(productID)
-        )
+  const configAddToCartBtn = {
+    type: "button",
+  };
 
-        return () => {
-            dispatch(
-                setProduct({})
-            )
-        }
-    }, []);
+  const handleAddToCart = (product) => {
+    if (!product) return;
+    dispatch(addProduct(product));
+    history.push("/cart");
+  };
 
-    const configAddToCartBtn = {
-        type: 'button'
-    }
-
-    const handleAddToCart = (product) => {
-        if(!product) return;
-        dispatch(
-            addProduct(product)
-        );
-        history.push('/cart');
-    }
-
-    return(
-        <div className="productCard">
-            <div className="hero">
-                <img src={productThumbnail}/>
+  return (
+    <div className="productCard">
+      <div className="hero">
+        <img src={productThumbnail} />
+      </div>
+      <div className="productDetails">
+        <ul>
+          <li>
+            <h1>{productName}</h1>
+            <h5>ISBN: {productISBN}</h5>
+          </li>
+          <li>
+            <h3>{productAuthor}</h3>
+          </li>
+          <li>
+            <span>${productPrice}</span>
+          </li>
+          <li>
+            <div className="addToCart">
+              <Button
+                {...configAddToCartBtn}
+                onClick={() => handleAddToCart(book)}
+              >
+                Añadir al carrito
+              </Button>
             </div>
-            <div className="productDetails">
-                <ul>
-                    <li>
-                        <h1>
-                            {productName}
-                        </h1>
-                        <h5>
-                            ISBN: {productISBN}
-                        </h5>
-                    </li>
-                    <li>
-                        <h3>
-                            {productAuthor}
-                        </h3>
-                    </li>
-                    <li>
-                        <span>
-                            ${productPrice}
-                        </span>
-                    </li>
-                    <li>
-                        <div className="addToCart">
-                            <Button {...configAddToCartBtn} onClick={() => handleAddToCart(product)}>
-                                Añadir al carrito
-                            </Button>
-                        </div>
-                    </li>
-                    <li>
-                        <h4>
-                            Sinopsis:
-                        </h4>
-                        <p>
-                            {productDescription}
-                        </p>
-                    </li>
-                </ul>
-            </div>
-            
-        </div>
-    );
-}
+          </li>
+          <li>
+            <h4>Sinopsis:</h4>
+            <p>{productDescription}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
 
 export default ProductCard;

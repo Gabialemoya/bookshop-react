@@ -3,7 +3,6 @@ import Header from "./../components/Header/header";
 import Footer from "./../components/Footer/footer";
 
 const HomepageLayout = (props) => {
-  console.log(props);
   return (
     <div>
       <Header {...props} />
