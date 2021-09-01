@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useParams } from "react-router-dom";
-import {
-  fetchProductsStart,
-  fetchProductStart,
-} from "../../redux/Products/products.actions";
+import { fetchProductsStart } from "../../redux/Products/products.actions";
 import Product from "./Product/product";
-//import { useState } from 'react';
 import FormSelect from "../forms/FormSelect/formselect";
 import FormInput from "../forms/FormInput/forminput";
 import Button from "../forms/Button/button";
 import LoadMore from "../LoadMore/loadmore";
-//import Link from
 import "./productresults.scss";
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
 });
 
-const ProductResults = ({}) => {
+const ProductResults = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { filterType } = useParams();
-  const { searchType } = useParams();
   const { products } = useSelector(mapState);
   const [searchTerm, setSearchTerm] = useState("");
   const { data, queryDoc, isLastPage } = products;
@@ -31,29 +25,17 @@ const ProductResults = ({}) => {
     dispatch(fetchProductsStart({ filterType }));
   }, [filterType]);
 
-  useEffect(() => {
-    dispatch(fetchProductStart({ searchType }));
-  }, [searchType]);
-
   const handleFilter = (e) => {
-    //filtros
     const nextFilter = e.target.value;
     history.push(`/search/${nextFilter}`);
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-
-    console.log(searchTerm);
     history.push(`/search/results/${searchTerm}`);
   };
 
   if (!Array.isArray(data)) return null;
-
-  const configSearch = {
-    defaultValue: searchType,
-    handleChange: handleSearch,
-  };
 
   const configFilters = {
     defaultValue: filterType,
@@ -121,14 +103,9 @@ const ProductResults = ({}) => {
             value={searchTerm}
             placeholder="Ingrese el titulo del libro, autor/a o ISBN"
             handleChange={(e) => setSearchTerm(e.target.value)}
-
-            //value={this.target.value}
           />
 
           <Link to={`/search/results/${searchTerm}`}>BUSCAR</Link>
-          {/* <Button type="submit" >
-                        Buscar
-                    </Button> */}
         </form>
       </div>
 

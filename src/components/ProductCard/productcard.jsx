@@ -1,29 +1,16 @@
-import React, { useEffect } from "react";
-import { useParams, useHistory, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchProductStart,
-  setProduct,
-} from "../../redux/Products/products.actions";
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import { addProduct } from "../../redux/Cart/cart.actions";
 import Button from "../forms/Button/button";
 import "./productcard.scss";
-import { useState } from "react";
-
-const mapState = (state) => ({
-  product: state.productsData.product,
-});
 
 const ProductCard = ({ book }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { productID } = useParams();
-  const location = useLocation();
-  const [product, setProduct] = useState({});
 
-//   if(location.pathname.startsWith )
   const {
-    //datos a mostrar en el detalle
     productThumbnail,
     productName,
     productAuthor,
@@ -31,14 +18,6 @@ const ProductCard = ({ book }) => {
     productPrice,
     productISBN,
   } = book;
-
-  useEffect(() => {
-    dispatch(fetchProductStart(productID));
-
-    return () => {
-      dispatch(setProduct({}));
-    };
-  }, []);
 
   const configAddToCartBtn = {
     type: "button",
@@ -49,8 +28,6 @@ const ProductCard = ({ book }) => {
     dispatch(addProduct(product));
     history.push("/cart");
   };
-  console.log(location);
-  console.log(book);
 
   return (
     <div className="productCard">
@@ -73,7 +50,7 @@ const ProductCard = ({ book }) => {
             <div className="addToCart">
               <Button
                 {...configAddToCartBtn}
-                onClick={() => handleAddToCart(product)}
+                onClick={() => handleAddToCart(book)}
               >
                 Añadir al carrito
               </Button>

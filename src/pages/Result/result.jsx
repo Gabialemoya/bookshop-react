@@ -7,7 +7,6 @@ import { firestore } from "../../firebase/utils";
 
 const Result = () => {
   const { searchType } = useParams();
-  console.log(searchType.split(" "));
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
@@ -20,9 +19,10 @@ const Result = () => {
           if (
             doc
               .data()
-              .productName.toUpperCase()
+              .productName.toUpperCase().split(" ")
               .includes(searchType.toUpperCase()) ||
-            doc.data().productAuthor.toUpperCase() === searchType.toUpperCase() ||
+            doc.data().productAuthor.toUpperCase() ===
+              searchType.toUpperCase() ||
             doc.data().productISBN === searchType
           ) {
             // doc.data() is never undefined for query doc snapshots
@@ -39,7 +39,8 @@ const Result = () => {
       });
   }, []);
 
-  console.log(books);
+  console.log(searchType);
+
   return (
     <div className="products">
       <div className="productResults">

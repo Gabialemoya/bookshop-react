@@ -26,12 +26,10 @@ const Product = (product) => {
     history.push("/cart");
   };
 
-  //console.log(product);
-
   return (
     <div className="product">
       <div className="thumb">
-        <Link to={`/product/${documentID}`}>
+        <Link to={{ pathname: `/product/${documentID}`, product: product }}>
           <img src={productThumbnail} alt={productName} />
         </Link>
       </div>
