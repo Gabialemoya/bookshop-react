@@ -63,21 +63,6 @@ export const resetAllAuthForms = () => ({
   type: userTypes.RESET_AUTH_FORMS,
 });
 
-//funcion asicrona que envia otra funcion
-// export const signInUser= ({ email, password}) => async dispatch => {
-//     try{
-//         await auth.signInWithEmailAndPassword(email, password);
-//         //success case
-//         dispatch({
-//             type: userTypes.SIGN_IN_SUCCESS,
-//             payload: true
-//         });
-
-//         }catch(err){
-//             console.log(err);
-//         }
-// };
-
 export const signUpUser =
   ({ displayName, email, password, confirmPassword }) =>
   async (dispatch) => {};

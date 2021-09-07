@@ -6,6 +6,7 @@ import {fetchProductsStart, fetchProductStart, searchProductStart, setProduct} f
 import { addProduct } from '../../redux/Cart/cart.actions';
 import Button from '../forms/Button/button';
 import './searchresults.scss';
+import ProductDetails from '../../pages/ProductDetails/productdetails';
 
 const mapState = state => ({
     product: state.productsData.product
@@ -45,7 +46,8 @@ const SearchResults = ({}) =>{
                 <ul>
                     <li>
                         <h1>
-                            {searchTerm}
+                            {/* {searchTerm} */}
+                            <ProductDetails />
                         </h1>
                        
                     </li>

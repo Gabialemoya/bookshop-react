@@ -30,7 +30,7 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
       })
     );
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -38,14 +38,6 @@ export function* emailSignIn({ payload: { email, password } }) {
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(user);
-    //success case
-    // yield put(
-    //     signInSuccess()
-    // )
-    // dispatch({
-    //     type: userTypes.SIGN_IN_SUCCESS,
-    //     payload: true
-    // });
   } catch (err) {
     console.log(err);
     const msgerror = "Email o contraseña incorrecta";
@@ -64,7 +56,7 @@ export function* isUserAuthenticated() {
     if (!userAuth) return;
     yield getSnapshotFromUserAuth(userAuth);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -77,7 +69,7 @@ export function* signOutUser() {
     yield auth.signOut();
     yield put(signOutUserSuccess());
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
@@ -102,23 +94,8 @@ export function* signUpUser({
     const additionalData = { displayName };
 
     yield getSnapshotFromUserAuth(user, additionalData);
-    //yield call(handleUserProfile, { userAuth:user, additionalData: {displayName}});
-    //await handleUserProfile(user, {displayName});
-
-    // dispatch({
-    //     type: userTypes.SIGN_UP_SUCCESS,
-    //     payload: true
-    // });
-
-    //resetear el formulario
-    // this.setState({
-    //     ...initialState
-    // });
-    // reset();
-
-    // props.history.push('/');
   } catch (err) {
-    // console.log(err);
+    console.log(err);
   }
 }
 
@@ -132,7 +109,7 @@ export function* resetPassword({ payload: { email } }) {
     yield call(handleResetPasswordAPI, email);
     yield put(resetPasswordSuccess());
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     yield put(userError(err));
   }
 }
@@ -145,14 +122,8 @@ export function* googleSignIn() {
   try {
     const { user } = yield auth.signInWithPopup(GoogleProvider);
     yield getSnapshotFromUserAuth(user);
-    //.then(() => {
-    //     dispatch({
-    //         type: userTypes.SIGN_IN_SUCCESS,
-    //         payload: true
-    //     });
-    // });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 }
 
