@@ -15,6 +15,7 @@ import Buttons from "./../forms/Button/button";
 // import AuthWrapp from './../../components/AuthWrapper/authwrapper';
 import AuthWrapper from "./../AuthWrapper/authwrapper";
 import FormInput from "./../forms/FormInput/forminput";
+import { regexEmail } from "../../assets/utils/constant";
 
 const mapState = ({ user }) => ({
   currentUser: user.currentUser,
@@ -62,6 +63,15 @@ const SignIn = (props) => {
           errors[key] = "Campo requerido";
           setErrors(errors);
           valid = false;
+        } else {
+          if (key === "email" && !value.match(regexEmail)) {
+            errors[key] = "Email incorrecto";
+            setErrors(errors);
+            valid = false;
+          }
+          if (key === "password" && value.length > 0 && value.length < 6) {
+            valid = false;
+          }
         }
       }
     }
@@ -97,7 +107,7 @@ const SignIn = (props) => {
       <div className="formWrap">
         <form onSubmit={handleSubmit}>
           <FormInput
-            type="email"
+            type="text"
             name="email"
             value={signIn.email}
             placeholder="Ingrese su email"
@@ -112,6 +122,11 @@ const SignIn = (props) => {
             placeholder="Ingrese su contraseña"
             handleChange={handleChange}
           />
+          {signIn.password.length > 0 && signIn.password.length < 6 && (
+            <p className="error-required">
+              La contraseña debe contener al menos 6 caracteres.
+            </p>
+          )}
           {errors.password && (
             <p className="error-required">{errors.password}</p>
           )}

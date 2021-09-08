@@ -17,7 +17,7 @@ const mapState = ({ user }) => ({
 
 const Signup = () => {
   const history = useHistory();
-  const { currentUser, userErr } = useSelector(mapState);
+  const { currentUser } = useSelector(mapState);
   const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
