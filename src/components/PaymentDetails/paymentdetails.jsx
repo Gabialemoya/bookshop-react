@@ -65,16 +65,46 @@ const PaymentDetails = () => {
     });
   };
 
+  const configOrder = {
+    orderTotal: total,
+    orderItems: cartItems.map((item) => {
+      const {
+        documentID,
+        productName,
+        productAuthor,
+        productPrice,
+        quantity,
+      } = item;
+
+      return {
+        documentID,
+        productName,
+        productAuthor,
+        productPrice,
+        quantity,
+      };
+    }),
+    orderDescription: cartItems.map((item) => {
+      const {
+        productName,
+        quantity,
+      } = item;
+      return quantity + " " + productName + " - "
+    })
+  };
+
+
+
   const sendEmail = async (e) => {
     e.preventDefault();
 
+    const info = e.target;
+    console.log("INFO", info);
+
+    console.log("ORDEN", configOrder)
+
     emailjs
-      .sendForm(
-        "gmail",
-        "template_af1451q",
-        e.target,
-        "user_PqBRce5EDpXMks8EICz3g"
-      )
+      .sendForm("gmail", "template_af1451q", info, "user_PqBRce5EDpXMks8EICz3g")
       .then(
         (result) => {
           dispatch(clearCart());
@@ -84,27 +114,6 @@ const PaymentDetails = () => {
         }
       );
     e.target.reset();
-
-    const configOrder = {
-      orderTotal: total,
-      orderItems: cartItems.map((item) => {
-        const {
-          documentID,
-          productName,
-          productAuthor,
-          productPrice,
-          quantity,
-        } = item;
-
-        return {
-          documentID,
-          productName,
-          productAuthor,
-          productPrice,
-          quantity,
-        };
-      }),
-    };
 
     dispatch(saveOrderHistory(configOrder));
     history.push("/confirm");
@@ -178,6 +187,9 @@ const PaymentDetails = () => {
             value={postal_code}
             type="text"
           />
+
+          <input style={{ display: "none"}} name="total" readOnly value={configOrder.orderTotal} />
+          <input style={{ display: "none"}} name="individual" readOnly value={configOrder.orderDescription} />
           <div className="formRow checkoutInput">
             <CountryDropdown
               required
