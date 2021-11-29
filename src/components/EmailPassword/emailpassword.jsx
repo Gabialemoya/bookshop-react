@@ -84,7 +84,7 @@ const EmailPassword = () => {
 
         <form onSubmit={handleSubmit}>
           <FormInput
-            type="email"
+            type="text"
             name="email"
             value={email}
             placeholder="Ingrese su mail"
