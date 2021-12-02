@@ -14,6 +14,7 @@ import TextArea from "../../components/forms/TextArea/textarea";
 import Button from "./../../components/forms/Button/button";
 import LoadMore from "./../../components/LoadMore/loadmore";
 import "./admin.scss";
+import { regexUrl } from "../../assets/utils/constant";
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
@@ -60,6 +61,12 @@ const Admin = () => {
         errors[key] = "Campo requerido";
         setErrors(errors);
         valid = false;
+      } else {
+        if (key === "productThumbnail" && !obj[key].match(regexUrl)) {
+          errors[key] = "Url incorrecto";
+          setErrors(errors);
+          valid = false;
+        }
       }
     }
 
@@ -250,7 +257,7 @@ const Admin = () => {
 
             <FormInput
               label="URL Portada"
-              type="url"
+              type="text"
               value={productThumbnail}
               handleChange={(e) => {
                 setProductThumbnail(e.target.value);
@@ -279,8 +286,6 @@ const Admin = () => {
             <FormInput
               label="Price"
               type="number"
-              min="0.00"
-              max="10000.00"
               value={productPrice}
               handleChange={(e) => {
                 setProductPrice(e.target.value);
