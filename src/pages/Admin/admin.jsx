@@ -14,13 +14,12 @@ import TextArea from "../../components/forms/TextArea/textarea";
 import Button from "./../../components/forms/Button/button";
 import LoadMore from "./../../components/LoadMore/loadmore";
 import "./admin.scss";
-//import { useState } from 'react';
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
 });
 
-const Admin = (props) => {
+const Admin = () => {
   const { products } = useSelector(mapState);
 
   const dispatch = useDispatch();
@@ -32,7 +31,8 @@ const Admin = (props) => {
   const [productAuthor, setProductAuthor] = useState("");
   const [productThumbnail, setProductThumbnail] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [productPrice, setProductPrice] = useState(0);
+  const [productPrice, setProductPrice] = useState("");
+  const [errors, setErrors] = useState([]);
 
   const { data, queryDoc, isLastPage } = products;
 
@@ -42,36 +42,61 @@ const Admin = (props) => {
 
   const toggleModal = () => setHideModal(!hideModal);
 
+  const isValidField = () => {
+    let obj = {
+      productISBN,
+      productName,
+      productAuthor,
+      productThumbnail,
+      productDescription,
+      productPrice,
+    };
+    let valid = true;
+    let errors = {};
+
+    for (let key in obj) {
+      if (obj[key] === "") {
+        errors[key] = "Campo requerido";
+        setErrors(errors);
+        valid = false;
+      }
+    }
+
+    return valid;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (productId === 0) {
-      dispatch(
-        addProductStart({
-          productCategory,
-          productISBN,
-          productName,
-          productAuthor,
-          productThumbnail,
-          productDescription,
-          productPrice,
-        })
-      );
-    } else {
-      dispatch(
-        editProductStart({
-          productId,
-          productCategory,
-          productISBN,
-          productName,
-          productAuthor,
-          productThumbnail,
-          productDescription,
-          productPrice,
-        })
-      );
+    if (isValidField()) {
+      if (productId === 0) {
+        dispatch(
+          addProductStart({
+            productCategory,
+            productISBN,
+            productName,
+            productAuthor,
+            productThumbnail,
+            productDescription,
+            productPrice,
+          })
+        );
+      } else {
+        dispatch(
+          editProductStart({
+            productId,
+            productCategory,
+            productISBN,
+            productName,
+            productAuthor,
+            productThumbnail,
+            productDescription,
+            productPrice,
+          })
+        );
+      }
+      handleClose();
     }
-    handleClose();
   };
 
   const handleLoadMore = () => {
@@ -171,52 +196,90 @@ const Admin = (props) => {
                   name: "Fantasia",
                 },
               ]}
-              handleChange={(e) => setProductCategory(e.target.value)}
+              handleChange={(e) => {
+                setProductCategory(e.target.value);
+              }}
             />
+
             <FormInput
               label="ISBN"
-              type="text"
+              type="number"
               value={productISBN}
-              handleChange={(e) => setProductISBN(e.target.value)}
+              handleChange={(e) => {
+                setProductISBN(e.target.value);
+                setErrors({ ...errors, productISBN: "" });
+              }}
             />
+            {errors.productISBN && (
+              <p className="error-required">{errors.productISBN}</p>
+            )}
 
             <FormInput
               label="Titulo"
               type="text"
               value={productName}
-              handleChange={(e) => setProductName(e.target.value)}
+              handleChange={(e) => {
+                setProductName(e.target.value);
+                setErrors({ ...errors, productName: "" });
+              }}
             />
+            {errors.productName && (
+              <p className="error-required">{errors.productName}</p>
+            )}
 
             <FormInput
               label="Autor/a"
               type="text"
               value={productAuthor}
-              handleChange={(e) => setProductAuthor(e.target.value)}
+              handleChange={(e) => {
+                setProductAuthor(e.target.value);
+                setErrors({ ...errors, productAuthor: "" });
+              }}
             />
+            {errors.productAuthor && (
+              <p className="error-required">{errors.productAuthor}</p>
+            )}
 
             <FormInput
               label="URL Portada"
               type="url"
               value={productThumbnail}
-              handleChange={(e) => setProductThumbnail(e.target.value)}
+              handleChange={(e) => {
+                setProductThumbnail(e.target.value);
+                setErrors({ ...errors, productThumbnail: "" });
+              }}
             />
+            {errors.productThumbnail && (
+              <p className="error-required">{errors.productThumbnail}</p>
+            )}
 
             <TextArea
               label="Sinopsis"
               type="text"
               value={productDescription}
-              handleChange={(e) => setProductDescription(e.target.value)}
+              handleChange={(e) => {
+                setProductDescription(e.target.value);
+                setErrors({ ...errors, productDescription: "" });
+              }}
             />
+            {errors.productDescription && (
+              <p className="error-required">{errors.productDescription}</p>
+            )}
 
             <FormInput
               label="Price"
               type="number"
               min="0.00"
               max="10000.00"
-              step="0.01"
               value={productPrice}
-              handleChange={(e) => setProductPrice(e.target.value)}
+              handleChange={(e) => {
+                setProductPrice(e.target.value);
+                setErrors({ ...errors, productPrice: "" });
+              }}
             />
+            {errors.productPrice && (
+              <p className="error-required">{errors.productPrice}</p>
+            )}
 
             <Button type="submit">
               {" "}
