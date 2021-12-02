@@ -7,7 +7,7 @@ import { addProduct } from "../../../redux/Cart/cart.actions";
 const Product = (product) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { documentID, productThumbnail, productName, productPrice } = product;
+  const { documentID, productThumbnail, productName, productPrice, productStock } = product;
   if (
     !documentID ||
     !productThumbnail ||
@@ -43,8 +43,10 @@ const Product = (product) => {
           <li>
             <span className="price">${productPrice}</span>
           </li>
-          <li>
-            <div className="addToCart">
+          {
+            productStock?
+            <li>
+            <div className=  "addToCart">
               <Button
                 {...configAddToCartBtn}
                 onClick={() => handleAddToCart(product)}
@@ -53,10 +55,20 @@ const Product = (product) => {
               </Button>
             </div>
           </li>
+          :
+          <li>
+            <div >
+              <span className="noStock" >SIN STOCK</span>
+            </div>
+          </li>
+          }
+
         </ul>
       </div>
     </div>
   );
+
+  
 };
 
 export default Product;

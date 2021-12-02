@@ -33,6 +33,7 @@ const Admin = () => {
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [errors, setErrors] = useState([]);
+  const [productStock, setProductStock] = useState(true);
 
   const { data, queryDoc, isLastPage } = products;
 
@@ -68,34 +69,33 @@ const Admin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (isValidField()) {
-      if (productId === 0) {
-        dispatch(
-          addProductStart({
-            productCategory,
-            productISBN,
-            productName,
-            productAuthor,
-            productThumbnail,
-            productDescription,
-            productPrice,
-          })
-        );
-      } else {
-        dispatch(
-          editProductStart({
-            productId,
-            productCategory,
-            productISBN,
-            productName,
-            productAuthor,
-            productThumbnail,
-            productDescription,
-            productPrice,
-          })
-        );
-      }
-      handleClose();
+    if (productId === 0) {
+      dispatch(
+        addProductStart({
+          productCategory,
+          productISBN,
+          productName,
+          productAuthor,
+          productThumbnail,
+          productDescription,
+          productPrice,
+          productStock,
+        })
+      );
+    } else {
+      dispatch(
+        editProductStart({
+          productId,
+          productCategory,
+          productISBN,
+          productName,
+          productAuthor,
+          productThumbnail,
+          productDescription,
+          productPrice,
+          productStock,
+        })
+      );
     }
   };
 
@@ -123,6 +123,7 @@ const Admin = () => {
       productName,
       productPrice,
       productThumbnail,
+      productStock,
     } = product;
     setProductId(documentID);
     setProductCategory(productCategory);
@@ -132,6 +133,7 @@ const Admin = () => {
     setProductThumbnail(productThumbnail);
     setProductDescription(productDescription);
     setProductPrice(productPrice);
+    setProductStock(productStock);
   };
 
   const handleClean = () => {
@@ -143,6 +145,7 @@ const Admin = () => {
     setProductThumbnail("");
     setProductDescription("");
     setProductPrice(0);
+    setProductStock(true);
   };
 
   const handleClose = () => {
@@ -280,6 +283,22 @@ const Admin = () => {
             {errors.productPrice && (
               <p className="error-required">{errors.productPrice}</p>
             )}
+
+            <FormSelect
+              label="Stock"
+              value={productStock}
+              options={[
+                {
+                  name: "Si",
+                  value: true,
+                },
+                {
+                  name: "No",
+                  value: false,
+                },
+              ]}
+              handleChange={(e) => setProductStock(e.target.value)}
+            />
 
             <Button type="submit">
               {" "}

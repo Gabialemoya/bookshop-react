@@ -13,6 +13,29 @@
             margin: 0;
         }
     }
+    .no_stock{
+        display: block;
+        width: 100%;
+        margin: 20px auto;
+
+        img{
+            display: block;
+            width: 100%;
+            margin: 0;
+            opacity: 0.4;
+    filter: alpha(opacity=40); 
+        }
+        
+        .centered {
+            
+            text-align: center;
+vertical-align: middle;
+line-height: 90px;
+          }
+         
+    }
+
+    
 
     .productDetails{
         ul, ul li{
