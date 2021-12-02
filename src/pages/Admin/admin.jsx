@@ -69,33 +69,36 @@ const Admin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (productId === 0) {
-      dispatch(
-        addProductStart({
-          productCategory,
-          productISBN,
-          productName,
-          productAuthor,
-          productThumbnail,
-          productDescription,
-          productPrice,
-          productStock,
-        })
-      );
-    } else {
-      dispatch(
-        editProductStart({
-          productId,
-          productCategory,
-          productISBN,
-          productName,
-          productAuthor,
-          productThumbnail,
-          productDescription,
-          productPrice,
-          productStock,
-        })
-      );
+    if (isValidField()) {
+      if (productId === 0) {
+        dispatch(
+          addProductStart({
+            productCategory,
+            productISBN,
+            productName,
+            productAuthor,
+            productThumbnail,
+            productDescription,
+            productPrice,
+            productStock,
+          })
+        );
+      } else {
+        dispatch(
+          editProductStart({
+            productId,
+            productCategory,
+            productISBN,
+            productName,
+            productAuthor,
+            productThumbnail,
+            productDescription,
+            productPrice,
+            productStock,
+          })
+        );
+      }
+      handleClean();
     }
   };
 
@@ -138,18 +141,20 @@ const Admin = () => {
 
   const handleClean = () => {
     setHideModal(true);
+    setProductId(0);
     setProductCategory("");
     setProductISBN("");
     setProductName("");
     setProductAuthor("");
     setProductThumbnail("");
     setProductDescription("");
-    setProductPrice(0);
+    setProductPrice("");
     setProductStock(true);
+    setErrors([]);
   };
 
   const handleClose = () => {
-    toggleModal();
+    //toggleModal();
     handleClean();
   };
 
@@ -164,7 +169,7 @@ const Admin = () => {
       <div className="callToActions">
         <ul>
           <li>
-            <Button onClick={() => toggleModal()}>Añadir nuevo libro</Button>
+            <Button onClick={() => toggleModal()}>Agregar libro</Button>
           </li>
         </ul>
       </div>
@@ -172,7 +177,7 @@ const Admin = () => {
       <Modal {...configModal}>
         <div className="addNewProductForm">
           <form onSubmit={handleSubmit}>
-            <h2>{productId === 0 ? "Añadir nuevo libro" : "Editar libro"}</h2>
+            <h2>{productId === 0 ? "Agregar libro" : "Editar libro"}</h2>
 
             <FormSelect
               label="Genero"
@@ -214,7 +219,7 @@ const Admin = () => {
               }}
             />
             {errors.productISBN && (
-              <p className="error-required">{errors.productISBN}</p>
+              <p className="error-required space">{errors.productISBN}</p>
             )}
 
             <FormInput
@@ -227,7 +232,7 @@ const Admin = () => {
               }}
             />
             {errors.productName && (
-              <p className="error-required">{errors.productName}</p>
+              <p className="error-required space">{errors.productName}</p>
             )}
 
             <FormInput
@@ -240,7 +245,7 @@ const Admin = () => {
               }}
             />
             {errors.productAuthor && (
-              <p className="error-required">{errors.productAuthor}</p>
+              <p className="error-required space">{errors.productAuthor}</p>
             )}
 
             <FormInput
@@ -253,7 +258,7 @@ const Admin = () => {
               }}
             />
             {errors.productThumbnail && (
-              <p className="error-required">{errors.productThumbnail}</p>
+              <p className="error-required space">{errors.productThumbnail}</p>
             )}
 
             <TextArea
@@ -266,7 +271,9 @@ const Admin = () => {
               }}
             />
             {errors.productDescription && (
-              <p className="error-required">{errors.productDescription}</p>
+              <p className="error-required space" style={{ marginTop: "8px" }}>
+                {errors.productDescription}
+              </p>
             )}
 
             <FormInput
@@ -281,7 +288,7 @@ const Admin = () => {
               }}
             />
             {errors.productPrice && (
-              <p className="error-required">{errors.productPrice}</p>
+              <p className="error-required space">{errors.productPrice}</p>
             )}
 
             <FormSelect
