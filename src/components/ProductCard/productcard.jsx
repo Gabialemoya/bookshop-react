@@ -17,6 +17,7 @@ const ProductCard = ({ book }) => {
     productDescription,
     productPrice,
     productISBN,
+    productStock
   } = book;
 
   const configAddToCartBtn = {
@@ -31,9 +32,21 @@ const ProductCard = ({ book }) => {
 
   return (
     <div className="productCard">
-      <div className="hero">
+      {
+        productStock?
+        <div className="hero">
         <img src={productThumbnail} />
       </div>
+      :
+      <div className="no_stock">
+        <img src={productThumbnail} />
+        <h3 class="centered">SIN STOCK</h3>
+      </div>
+     
+      
+
+      }
+      
       <div className="productDetails">
         <ul>
           <li>
@@ -46,19 +59,17 @@ const ProductCard = ({ book }) => {
           <li>
             <span>${productPrice}</span>
           </li>
-          <li>
-            <div className="addToCart">
-              <Button
-                {...configAddToCartBtn}
-                onClick={() => handleAddToCart(book)}
-              >
-                Añadir al carrito
-              </Button>
-            </div>
-          </li>
+          
           <li>
             <h4>Sinopsis:</h4>
             <p>{productDescription}</p>
+          </li>
+          <li>
+            <div >
+            <Button onClick={() => history.goBack()}>
+                                    Volver a HOME
+                                  </Button>
+            </div>
           </li>
         </ul>
       </div>

@@ -58,7 +58,7 @@ const resetPassword = e =>{
                     </form>
         
       
-      <Button className="edit-button">Editar perfil</Button>
+      {/* <Button className="edit-button">Editar perfil</Button> */}
     </div>
   );
 }

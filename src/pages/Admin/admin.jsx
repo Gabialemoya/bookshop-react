@@ -33,6 +33,7 @@ const Admin = (props) => {
   const [productThumbnail, setProductThumbnail] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState(0);
+  const [productStock, setProductStock] = useState(true);
 
   const { data, queryDoc, isLastPage } = products;
 
@@ -55,6 +56,7 @@ const Admin = (props) => {
           productThumbnail,
           productDescription,
           productPrice,
+          productStock,
         })
       );
     } else {
@@ -68,6 +70,7 @@ const Admin = (props) => {
           productThumbnail,
           productDescription,
           productPrice,
+          productStock,
         })
       );
     }
@@ -98,6 +101,8 @@ const Admin = (props) => {
       productName,
       productPrice,
       productThumbnail,
+      productStock,
+      
     } = product;
     setProductId(documentID);
     setProductCategory(productCategory);
@@ -107,6 +112,7 @@ const Admin = (props) => {
     setProductThumbnail(productThumbnail);
     setProductDescription(productDescription);
     setProductPrice(productPrice);
+    setProductStock(productStock);
   };
 
   const handleClean = () => {
@@ -118,6 +124,7 @@ const Admin = (props) => {
     setProductThumbnail("");
     setProductDescription("");
     setProductPrice(0);
+    setProductStock(true);
   };
 
   const handleClose = () => {
@@ -216,6 +223,22 @@ const Admin = (props) => {
               step="0.01"
               value={productPrice}
               handleChange={(e) => setProductPrice(e.target.value)}
+            />
+
+          <FormSelect
+              label="Stock"
+              value={productStock}
+              options={[
+                {
+                  name: "Si",
+                  value: true,
+                },
+                {
+                  name: "No",
+                  value: false,
+                },
+              ]}
+              handleChange={(e) => setProductStock(e.target.value)}
             />
 
             <Button type="submit">
