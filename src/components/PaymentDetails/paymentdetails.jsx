@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { CardElement } from "@stripe/react-stripe-js";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import FormInput from "../../components/forms/FormInput/forminput";
 import Button from "../../components/forms/Button/button";
 import { CountryDropdown } from "react-country-region-selector";
 import { saveOrderHistory } from "../../redux/Orders/orders.actions";
 import { useSelector, useDispatch } from "react-redux";
+import { regexEmail } from "../../assets/utils/constant";
 
 //datos carrito
 import { clearCart } from "../../redux/Cart/cart.actions";
@@ -50,12 +51,44 @@ const PaymentDetails = () => {
   const [shippingAddress, setShippingAdress] = useState({
     ...initialAddressState,
   });
+  const [errors, setErrors] = useState([]);
+
+  const elements = useElements();
+  const stripe = useStripe();
 
   useEffect(() => {
     if (itemCount < 1) {
       history.push("/dashboard");
     }
   }, [itemCount]);
+
+  const isValidField = () => {
+    let obj = { recipientName, recipientMail, line1, state, city, postal_code };
+    let valid = true;
+    let errors = {};
+
+    for (let key in obj) {
+      if (obj[key] === "") {
+        errors[key] = "Campo requerido";
+        setErrors(errors);
+        valid = false;
+      } else {
+        if (key === "recipientMail" && !obj[key].match(regexEmail)) {
+          errors[key] = "Email incorrecto";
+          setErrors(errors);
+          valid = false;
+        }
+      }
+
+      if (shippingAddress.country === "") {
+        errors["country"] = "Campo requerido";
+        setErrors(errors);
+        valid = false;
+      }
+    }
+
+    return valid;
+  };
 
   const handleShipping = (e) => {
     const { name, value } = e.target;
@@ -68,13 +101,8 @@ const PaymentDetails = () => {
   const configOrder = {
     orderTotal: total,
     orderItems: cartItems.map((item) => {
-      const {
-        documentID,
-        productName,
-        productAuthor,
-        productPrice,
-        quantity,
-      } = item;
+      const { documentID, productName, productAuthor, productPrice, quantity } =
+        item;
 
       return {
         documentID,
@@ -85,38 +113,51 @@ const PaymentDetails = () => {
       };
     }),
     orderDescription: cartItems.map((item) => {
-      const {
-        productName,
-        quantity,
-      } = item;
-      return quantity + " " + productName + " - "
-    })
+      const { productName, quantity } = item;
+      return quantity + " " + productName + " - ";
+    }),
   };
-
-
 
   const sendEmail = async (e) => {
     e.preventDefault();
+    if (isValidField()) {
+      if (!stripe || !elements) return;
 
-    const info = e.target;
-    console.log("INFO", info);
+      const { error, paymentMethod } = await stripe.createPaymentMethod({
+        type: "card",
+        card: elements.getElement(CardElement),
+      });
+      if (error) {
+        setErrors({ ...errors, cardElement: "Campo requerido" });
+        console.log(error);
+      } else {
+        console.log(paymentMethod);
+        const info = e.target;
+        console.log("INFO", info);
 
-    console.log("ORDEN", configOrder)
+        console.log("ORDEN", configOrder);
 
-    emailjs
-      .sendForm("gmail", "template_af1451q", info, "user_PqBRce5EDpXMks8EICz3g")
-      .then(
-        (result) => {
-          dispatch(clearCart());
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-    e.target.reset();
+        emailjs
+          .sendForm(
+            "gmail",
+            "template_af1451q",
+            info,
+            "user_PqBRce5EDpXMks8EICz3g"
+          )
+          .then(
+            (result) => {
+              dispatch(clearCart());
+            },
+            (err) => {
+              console.log(err.text);
+            }
+          );
+        e.target.reset();
 
-    dispatch(saveOrderHistory(configOrder));
-    history.push("/confirm");
+        dispatch(saveOrderHistory(configOrder));
+        history.push("/confirm");
+      }
+    }
   };
 
   const configCardElement = {
@@ -135,82 +176,119 @@ const PaymentDetails = () => {
         <div className="group">
           <h2>Direccion de Envio</h2>
           <FormInput
-            required
             placeholder="Nombre del destinatario"
             name="recipientName"
-            handleChange={(e) => setRecipientName(e.target.value)}
+            handleChange={(e) => {
+              setRecipientName(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
             value={recipientName}
             type="text"
           />
+          {errors.recipientName && (
+            <p className="error-required">{errors.recipientName}</p>
+          )}
 
           <FormInput
-            required
             placeholder="Mail del destinatario"
             name="recipientMail"
-            handleChange={(e) => setRecipientMail(e.target.value)}
+            handleChange={(e) => {
+              setRecipientMail(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
             value={recipientMail}
-            type="email"
+            type="text"
           />
+          {errors.recipientMail && (
+            <p className="error-required">{errors.recipientMail}</p>
+          )}
 
           <FormInput
-            required
             placeholder="Direccion"
             name="line1"
-            handleChange={(e) => setLine1(e.target.value)}
+            handleChange={(e) => {
+              setLine1(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
             value={line1}
             type="text"
           />
+          {errors.line1 && <p className="error-required">{errors.line1}</p>}
 
           <FormInput
-            required
             placeholder="Ciudad"
             name="city"
-            handleChange={(e) => setCity(e.target.value)}
+            handleChange={(e) => {
+              setCity(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
             value={city}
             type="text"
           />
+          {errors.city && <p className="error-required">{errors.city}</p>}
 
           <FormInput
-            required
             placeholder="Provincia"
             name="state"
-            handleChange={(e) => setState(e.target.value)}
+            handleChange={(e) => {
+              setState(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
             value={state}
             type="text"
           />
+          {errors.state && <p className="error-required">{errors.state}</p>}
 
           <FormInput
-            required
             placeholder="Codigo postal"
             name="postal_code"
-            handleChange={(e) => setPostal_Code(e.target.value)}
+            handleChange={(e) => {
+              setPostal_Code(e.target.value);
+              setErrors({ ...errors, [e.target.name]: "" });
+            }}
             value={postal_code}
             type="text"
           />
+          {errors.postal_code && (
+            <p className="error-required">{errors.postal_code}</p>
+          )}
 
-          <input style={{ display: "none"}} name="total" readOnly value={configOrder.orderTotal} />
-          <input style={{ display: "none"}} name="individual" readOnly value={configOrder.orderDescription} />
+          <input
+            style={{ display: "none" }}
+            name="total"
+            readOnly
+            value={configOrder.orderTotal}
+          />
+          <input
+            style={{ display: "none" }}
+            name="individual"
+            readOnly
+            value={configOrder.orderDescription}
+          />
           <div className="formRow checkoutInput">
             <CountryDropdown
-              required
-              onChange={(val) =>
+              onChange={(val) => {
+                setErrors({ ...errors, country: "" });
                 handleShipping({
                   target: {
                     name: "country",
                     value: val,
                   },
-                })
-              }
+                });
+              }}
               defaultOptionLabel="Seleccionar pais"
               value={shippingAddress.country}
               valueType="short"
             />
+            {errors.country && (
+              <p className="error-required">{errors.country}</p>
+            )}
           </div>
         </div>
 
         <div className="group">
           <h2>Datos de tarjeta</h2>
-          <CardElement options={configCardElement} />
+          <CardElement id="card-element" options={configCardElement} />
         </div>
 
         <Button type="submit">Comprar</Button>
