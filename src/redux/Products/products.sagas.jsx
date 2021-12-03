@@ -23,6 +23,7 @@ export function* addProduct({
     productThumbnail,
     productDescription,
     productPrice,
+    productStock,
   },
 }) {
   try {
@@ -35,6 +36,7 @@ export function* addProduct({
       productThumbnail,
       productDescription,
       productPrice,
+      productStock,
       productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp,
     });
@@ -52,6 +54,7 @@ export function* editProduct({
     productThumbnail,
     productDescription,
     productPrice,
+    productStock,
   },
 }) {
   try {
@@ -65,6 +68,7 @@ export function* editProduct({
       productThumbnail,
       productDescription,
       productPrice,
+      productStock,
       productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp,
     });

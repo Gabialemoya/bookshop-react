@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from './../forms/Button/button';
 import Clasicos from './../../assets/clasicos.JPG';
 import './directory.scss';
 
@@ -13,22 +14,13 @@ const Directory = props =>{
                         backgroundImage: `url(${Clasicos})`
                     }
                 }>
-                    <a className="btnInicio" href="/">
-                        Ir al Bookshop
-                    </a>
-                </div>
-                {/* <div
-                className='item'
-                style={
-                    {
-                        backgroundImage: `url(${Terror})`
-                    }
-                }>
-                     <a href="hhh">
-                        Shop Terror
-                    </a>
+
+                    <h3>Este es un proyecto de Gabriela Moya y Rocío Pepek para la materia Práctica Profesional de la carrera Licenciatura en Informática en la Universidad Nacional del Oeste
+                    <br /> <a href="/search">Ir al bookshop</a>
+                    </h3>
+                   
                     
-                </div> */}
+                </div>
             </div>
         </div>
     );

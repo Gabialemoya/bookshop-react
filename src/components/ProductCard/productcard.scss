@@ -3,12 +3,12 @@
     margin: 0 auto 100px;
 
     .hero{
-        display: block;
-        width: 100%;
+        
+        width: 50%;
         margin: 20px auto;
 
         img{
-            display: block;
+            
             width: 100%;
             margin: 0;
         }
@@ -17,11 +17,12 @@
         display: block;
         width: 100%;
         margin: 20px auto;
-
+        
         img{
+            margin-left: 25%;
             display: block;
-            width: 100%;
-            margin: 0;
+            width: 50%;
+           
             opacity: 0.4;
     filter: alpha(opacity=40); 
         }

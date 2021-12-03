@@ -25,7 +25,7 @@ const Product = (product) => {
     dispatch(addProduct(product));
     history.push("/cart");
   };
-
+if(productStock=="true" || productStock==true){
   return (
     <div className="product">
       <div className="thumb">
@@ -42,9 +42,9 @@ const Product = (product) => {
           </li>
           <li>
             <span className="price">${productPrice}</span>
+           
           </li>
-          {
-            productStock?
+         
             <li>
             <div className=  "addToCart">
               <Button
@@ -55,18 +55,46 @@ const Product = (product) => {
               </Button>
             </div>
           </li>
-          :
+          
+         
+        </ul>
+      </div>
+    </div>
+  );
+}
+else{
+  return (
+    <div className="product">
+      <div className="thumb">
+        <Link to={{ pathname: `/product/${documentID}`, product: product }}>
+          <img src={productThumbnail} alt={productName} />
+        </Link>
+      </div>
+      <div className="details">
+        <ul>
+          <li>
+            <span className="name">
+              <Link to={`/product/${documentID}`}>{productName}</Link>
+            </span>
+          </li>
+          <li>
+            <span className="price">${productPrice}</span>
+           
+          </li>
+          
           <li>
             <div >
               <span className="noStock" >SIN STOCK</span>
             </div>
           </li>
-          }
-
+          
+        
         </ul>
       </div>
     </div>
   );
+}
+  
 
   
 };
