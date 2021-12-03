@@ -25,7 +25,7 @@ const Product = (product) => {
     dispatch(addProduct(product));
     history.push("/cart");
   };
-if(productStock=="true"){
+if(productStock=="true" || productStock==true){
   return (
     <div className="product">
       <div className="thumb">

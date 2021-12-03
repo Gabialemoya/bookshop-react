@@ -156,7 +156,7 @@ const Admin = () => {
     setProductThumbnail("");
     setProductDescription("");
     setProductPrice("");
-    setProductStock(true);
+    setProductStock("true");
     setErrors([]);
   };
 
@@ -302,11 +302,11 @@ const Admin = () => {
               options={[
                 {
                   name: "Si",
-                  value: true,
+                  value: "true",
                 },
                 {
                   name: "No",
-                  value: false,
+                  value: "false",
                 },
               ]}
               handleChange={(e) => setProductStock(e.target.value)}
