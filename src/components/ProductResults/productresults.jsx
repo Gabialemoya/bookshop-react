@@ -8,6 +8,8 @@ import FormInput from "../forms/FormInput/forminput";
 import Button from "../forms/Button/button";
 import LoadMore from "../LoadMore/loadmore";
 import "./productresults.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
@@ -90,23 +92,31 @@ const ProductResults = () => {
   return (
     <div className="products">
       <h1>Buscar Libros</h1>
-      <div className="filtros">
-        Categorias
-        <FormSelect {...configFilters} />
-      </div>
-
-      <div className="SearchBar">
-        <form onSubmit={handleSearch}>
-          <FormInput
-            type="text"
-            name="search"
-            value={searchTerm}
-            placeholder="Ingrese el titulo del libro, autor/a o ISBN"
-            handleChange={(e) => setSearchTerm(e.target.value)}
-          />
-
-          <Link to={`/search/results/${searchTerm}`}>BUSCAR</Link>
-        </form>
+      <div className="grid-container">
+        <div className="grid-item filtros">
+          <FormSelect {...configFilters} />
+        </div>
+        <div className="grid-item SearchBar">
+          <form onSubmit={handleSearch}>
+            <FormInput
+              className="form-input"
+              type="text"
+              name="search"
+              value={searchTerm}
+              placeholder="Ingrese el titulo del libro, autor/a o ISBN"
+              handleChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </form>
+        </div>
+        <div className="grid-item">
+          <Link to={`/search/results/${searchTerm}`}>
+            <FontAwesomeIcon
+              icon={faSearch}
+              size="1x"
+              style={{ color: "black", marginTop: "20px" }}
+            />
+          </Link>
+        </div>
       </div>
 
       <div className="productResults">
