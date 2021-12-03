@@ -26,7 +26,7 @@
       z-index: 1;
     }
 
-    a {
+    h3{
       color: rgb(155, 66, 128);
       position: absolute;
       top: 50%;
@@ -35,14 +35,39 @@
       -moz-transform: translate(-50%, -50%);
       transform: translate(-50%, -50%);
       z-index: 2;
-      font-size: 2rem;
+      font-size: 3rem;
       line-height: 1;
       font-weight: 400;
       text-transform: uppercase;
+      text-align: center;
       background: white;
-      padding: 10px 15px;
+      padding: 30px 35px;
       border: 1px solid rgb(155, 66, 128);
       border-radius: 15px;
+
+      a{
+        display: block;
+        width: 100%;
+        font-size: 1.8rem;
+        line-height: 1;
+        font-weight: 300;
+        text-transform: uppercase;
+        color: white;
+        background: rgb(155, 66, 128);
+        padding: 1rem;
+        margin-top: 10px;
+        
+        border: 0;
+        outline: none;
+        cursor: pointer;
+    
+        
+    }
+    
+    a:hover{
+        background: rgb(200, 151, 185);
+        transition: all .4s ease-in-out;
+    }
     }
   }
 }

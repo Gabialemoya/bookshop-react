@@ -38,11 +38,11 @@ export const handleFetchProducts = ({
 }) => {
   return new Promise((resolve, reject) => {
     //elementos a mostrar
-    const pageSize = 3;
+    const pageSize = 6;
 
     let ref = firestore
       .collection("products")
-      .orderBy("createdDate")
+      .orderBy("productName")
       .limit(pageSize);
     if (filterType) ref = ref.where("productCategory", "==", filterType);
     //if(searchType) ref = ref.where('productName','==', searchType);
@@ -82,11 +82,11 @@ export const handleSearchProducts = ({
 }) => {
   return new Promise((resolve, reject) => {
     //elementos a mostrar
-    const pageSize = 3;
+    const pageSize = 6;
 
     let ref = firestore
       .collection("products")
-      .orderBy("createdDate")
+      .orderBy("productName")
       .limit(pageSize);
     //if(filterType) ref = ref.where('productCategory','==',filterType);
     if (searchTerm) ref = ref.where("productName", "==", searchTerm);

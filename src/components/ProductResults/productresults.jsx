@@ -115,7 +115,8 @@ const ProductResults = () => {
           if (
             !productThumbnail ||
             !productName ||
-            typeof productPrice === "undefined"
+            typeof productPrice === "undefined" 
+           
           )
             return null;
 
