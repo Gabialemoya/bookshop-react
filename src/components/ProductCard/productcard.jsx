@@ -30,7 +30,7 @@ const ProductCard = ({ book }) => {
     history.push("/cart");
   };
 
-  if(productStock=="true"){
+  if(productStock=="true" || productStock==true){
     return (
       <div className="productCard">
           <div className="hero">

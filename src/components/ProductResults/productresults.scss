@@ -4,6 +4,12 @@
     padding: 0;
     margin: 20px 0;
 
+    .headSearch{
+        
+        margin: 30px -10px 0;
+        text-align: center;
+    }
+    
     .productResults{
         display: flex;
         flex-wrap: wrap;
@@ -11,7 +17,7 @@
     }
     .SearchBar{
         width: 25%;
-        display: inline-block;
+        display:grid;
     }
 
 }
@@ -30,7 +36,9 @@
         img{
             display: block;
             width: 100%;
+            height: 300px;
             margin: 0;
+            object-fit: cover;
         }
     }
 
