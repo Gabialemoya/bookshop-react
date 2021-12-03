@@ -1,37 +1,38 @@
-.adminToolbar{
-    display: inline-block;
-    width: 100%;
-    background-color: rgb(155, 66, 128);
-    height: auto;
-    margin: 0 auto;
-    padding: 0 10px;
+.adminToolbar {
+  display: inline-block;
+  width: 100%;
+  background-color: rgb(155, 66, 128);
+  height: auto;
+  margin: 0 auto;
+  padding: 0 5%;
 
-    ul, li{
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
+  ul,
+  li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
 
-    ul{
-        float: right;
+  ul {
+    float: right;
 
-        li{
-            display: inline-block;
+    li {
+      display: inline-block;
 
-            a{
-                display: block;
-                font-size: 16px;
-                line-height: 1;
-                color: white;
-                padding: 10px;
-                transition: all .4s ease-in-out;
+      a {
+        display: block;
+        font-size: 16px;
+        line-height: 1;
+        color: white;
+        padding: 10px;
+        transition: all 0.4s ease-in-out;
 
-                &:hover{
-                    background-color: rgba(255,255,255,.6);
-                    color: black;
-                    transition: all .4s ease-in-out;
-                }
-            }
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.6);
+          color: black;
+          transition: all 0.4s ease-in-out;
         }
+      }
     }
+  }
 }
