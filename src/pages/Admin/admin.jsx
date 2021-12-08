@@ -278,13 +278,13 @@ const Admin = () => {
               }}
             />
             {errors.productDescription && (
-              <p className="error-required space" style={{ marginTop: "8px" }}>
+              <p className="error-required space">
                 {errors.productDescription}
               </p>
             )}
 
             <FormInput
-              label="Price"
+              label="Precio"
               type="number"
               value={productPrice}
               handleChange={(e) => {
