@@ -133,13 +133,13 @@ const SignIn = (props) => {
 
           <Buttons type="submit">Iniciar sesión</Buttons>
 
-          <div className="socialSignin">
+          {/* <div className="socialSignin">
             <div className="row">
               <Buttons onClick={handleGoogleSignIn}>
                 Iniciar sesión con Google
               </Buttons>
             </div>
-          </div>
+          </div> */}
 
           <div className="links">
             <Link to="/recovery">¿Olvidaste tu contraseña?</Link>
