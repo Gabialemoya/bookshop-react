@@ -39,8 +39,12 @@ export function* saveOrder({ payload }) {
       orderCreatedDate: timestamps,
     });
     yield put(clearCart());
+    yield put(ui.showMessage({ msg: "COMPRA REALIZADA", type: "success" }));
   } catch (err) {
     // console.log(err);
+    yield put(
+      ui.showMessage({ msg: "NO SE PUDO REALIZAR LA COMPRA", type: "error" })
+    );
   } finally {
     yield put(ui.showLoader(false));
   }

@@ -43,11 +43,11 @@ export function* addProduct({
       createdDate: timestamp,
     });
     yield put(fetchProductsStart());
-    yield put(ui.showMessage({ msg: "Libro agregado", type: "success" }));
+    yield put(ui.showMessage({ msg: "LIBRO AGREGADO", type: "success" }));
   } catch (err) {
     console.log({ err });
     yield put(
-      ui.showMessage({ msg: "No se pudo agregar el libro", type: "error" })
+      ui.showMessage({ msg: "NO SE PUDO AGREGAR EL LIBRO", type: "error" })
     );
   } finally {
     yield put(ui.showLoader(false));
@@ -84,7 +84,12 @@ export function* editProduct({
       createdDate: timestamp,
     });
     yield put(fetchProductsStart());
+    yield put(ui.showMessage({ msg: "LIBRO EDITADO", type: "success" }));
   } catch (err) {
+    console.log({ err });
+    yield put(
+      ui.showMessage({ msg: "NO SE PUDO EDITAR EL LIBRO", type: "error" })
+    );
   } finally {
     yield put(ui.showLoader(false));
   }
@@ -119,8 +124,12 @@ export function* deleteProduct({ payload }) {
     yield put(ui.showLoader(true));
     yield handleDeleteProduct(payload);
     yield put(fetchProductsStart());
+    yield put(ui.showMessage({ msg: "LIBRO ELIMINADO", type: "success" }));
   } catch (error) {
     console.log(error);
+    yield put(
+      ui.showMessage({ msg: "NO SE PUDO ELIMINAR EL LIBRO", type: "error" })
+    );
   } finally {
     yield put(ui.showLoader(false));
   }

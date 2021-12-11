@@ -107,8 +107,12 @@ export function* signUpUser({
     const additionalData = { displayName };
 
     yield getSnapshotFromUserAuth(user, additionalData);
+    yield put(ui.showMessage({ msg: "REGISTRO REALIZADO", type: "success" }));
   } catch (err) {
     console.log(err);
+    yield put(
+      ui.showMessage({ msg: "NO SE PUDO REALIZAR EL REGISTRO", type: "error" })
+    );
   } finally {
     yield put(ui.showLoader(false));
   }
@@ -124,9 +128,21 @@ export function* resetPassword({ payload: { email } }) {
     //yield permite que se pueda ejecutar la promise
     yield call(handleResetPasswordAPI, email);
     yield put(resetPasswordSuccess());
+    yield put(
+      ui.showMessage({
+        msg: "SE ENVIO EMAIL PARA RESTAURAR CONTRASEÑA",
+        type: "info",
+      })
+    );
   } catch (err) {
     console.log(err);
     yield put(userError(err));
+    yield put(
+      ui.showMessage({
+        msg: "NO SE PUDO ENVIAR MAIL PARA RESTAURAR CONTRASEÑA",
+        type: "error",
+      })
+    );
   } finally {
     yield put(ui.showLoader(false));
   }
