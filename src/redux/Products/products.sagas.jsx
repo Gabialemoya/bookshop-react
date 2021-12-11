@@ -43,7 +43,12 @@ export function* addProduct({
       createdDate: timestamp,
     });
     yield put(fetchProductsStart());
+    yield put(ui.showMessage({ msg: "Libro agregado", type: "success" }));
   } catch (err) {
+    console.log({ err });
+    yield put(
+      ui.showMessage({ msg: "No se pudo agregar el libro", type: "error" })
+    );
   } finally {
     yield put(ui.showLoader(false));
   }

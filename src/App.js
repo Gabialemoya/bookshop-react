@@ -55,7 +55,6 @@ const App = (props) => {
   const msgInfo = useSelector((st) => st.ui.msgInfo); */
 
   useEffect(() => {
-    debugger;
     if (msgInfo)
       addToast(msgInfo.msg, { appearance: msgInfo.type, autoDismiss: true });
     dispatch(checkUserSession());

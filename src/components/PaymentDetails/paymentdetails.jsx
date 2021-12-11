@@ -47,6 +47,7 @@ const PaymentDetails = () => {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [postal_code, setPostal_Code] = useState("");
+  const [itemArr, setItemArr] = useState([]);
 
   const [shippingAddress, setShippingAdress] = useState({
     ...initialAddressState,
@@ -98,6 +99,21 @@ const PaymentDetails = () => {
     });
   };
 
+  const itemsArr = () => {
+    let auxArr = [];
+    cartItems.forEach((item) => {
+      const { productName, quantity } = item;
+      auxArr.push(`${quantity} ${productName}`);
+    });
+    return `<ul>${items(auxArr)}</ul>`;
+  };
+
+  const items = (auxArr) => {
+    return auxArr.map((item) => {
+      return `<li>${item}</li>`;
+    });
+  };
+
   const configOrder = {
     orderTotal: total,
     orderItems: cartItems.map((item) => {
@@ -112,10 +128,7 @@ const PaymentDetails = () => {
         quantity,
       };
     }),
-    orderDescription: cartItems.map((item) => {
-      const { productName, quantity } = item;
-      return quantity + " " + productName + " - ";
-    }),
+    orderDescription: itemsArr(),
   };
 
   const sendEmail = async (e) => {
@@ -259,7 +272,7 @@ const PaymentDetails = () => {
             readOnly
             value={configOrder.orderTotal}
           />
-          <input
+          <textarea
             style={{ display: "none" }}
             name="individual"
             readOnly

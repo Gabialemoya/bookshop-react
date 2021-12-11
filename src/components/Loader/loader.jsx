@@ -4,7 +4,6 @@ import "./loader.scss";
 
 export const Loader = () => {
   const overlay = useSelector((state) => state.uiData.loading);
-  debugger;
 
   if (!overlay) return null;
   return (
