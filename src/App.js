@@ -35,6 +35,7 @@ import Result from "./pages/Result/result";
 import Profile from "./pages/Profile/profile";
 
 import "./default.scss";
+import { Loader } from "./components/Loader/loader";
 
 // const initialState = {
 //   currentUser: null
@@ -54,6 +55,7 @@ const App = (props) => {
   const msgInfo = useSelector((st) => st.ui.msgInfo); */
 
   useEffect(() => {
+    debugger;
     if (msgInfo)
       addToast(msgInfo.msg, { appearance: msgInfo.type, autoDismiss: true });
     dispatch(checkUserSession());
@@ -62,6 +64,7 @@ const App = (props) => {
   return (
     <div className="App">
       <AdminToolbar />
+      <Loader />
       <Switch>
         <Route
           exact

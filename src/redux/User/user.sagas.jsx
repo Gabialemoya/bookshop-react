@@ -17,6 +17,7 @@ import { ui } from "../UI/ui.actions";
 
 export function* getSnapshotFromUserAuth(user, additionalData = {}) {
   try {
+    yield put(ui.showLoader(true));
     const userRef = yield call(handleUserProfile, {
       userAuth: user,
       additionalData,
@@ -31,17 +32,22 @@ export function* getSnapshotFromUserAuth(user, additionalData = {}) {
     );
   } catch (error) {
     console.log(error);
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
 export function* emailSignIn({ payload: { email, password } }) {
   try {
+    yield put(ui.showLoader(true));
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
     yield getSnapshotFromUserAuth(user);
   } catch (err) {
     console.log(err);
     const msgerror = "Email o contraseña incorrecta";
     yield put(ui.showMessage({ msg: msgerror, type: "error" }));
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
@@ -52,11 +58,14 @@ export function* onEmailSignInStart() {
 
 export function* isUserAuthenticated() {
   try {
+    yield put(ui.showLoader(true));
     const userAuth = yield getCurrentUser();
     if (!userAuth) return;
     yield getSnapshotFromUserAuth(userAuth);
   } catch (error) {
     console.log(error);
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
@@ -66,10 +75,13 @@ export function* onCheckUserSession() {
 
 export function* signOutUser() {
   try {
+    yield put(ui.showLoader(true));
     yield auth.signOut();
     yield put(signOutUserSuccess());
   } catch (error) {
     console.log(error);
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
@@ -90,12 +102,15 @@ export function* signUpUser({
   } */
 
   try {
+    yield put(ui.showLoader(true));
     const { user } = yield auth.createUserWithEmailAndPassword(email, password);
     const additionalData = { displayName };
 
     yield getSnapshotFromUserAuth(user, additionalData);
   } catch (err) {
     console.log(err);
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
@@ -105,12 +120,15 @@ export function* onSignUpUserStart() {
 
 export function* resetPassword({ payload: { email } }) {
   try {
+    yield put(ui.showLoader(true));
     //yield permite que se pueda ejecutar la promise
     yield call(handleResetPasswordAPI, email);
     yield put(resetPasswordSuccess());
   } catch (err) {
     console.log(err);
     yield put(userError(err));
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
@@ -120,10 +138,13 @@ export function* onResetPasswordStart() {
 
 export function* googleSignIn() {
   try {
+    yield put(ui.showLoader(true));
     const { user } = yield auth.signInWithPopup(GoogleProvider);
     yield getSnapshotFromUserAuth(user);
   } catch (error) {
     console.log(error);
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 

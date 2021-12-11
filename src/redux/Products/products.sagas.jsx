@@ -13,6 +13,7 @@ import {
   handleFetchProduct,
 } from "./products.helpers";
 import productsTypes from "./products.types";
+import { ui } from "../../redux/UI/ui.actions";
 
 export function* addProduct({
   payload: {
@@ -27,6 +28,7 @@ export function* addProduct({
   },
 }) {
   try {
+    yield put(ui.showLoader(true));
     const timestamp = new Date();
     yield handleAddProduct({
       productCategory,
@@ -41,7 +43,10 @@ export function* addProduct({
       createdDate: timestamp,
     });
     yield put(fetchProductsStart());
-  } catch (err) {}
+  } catch (err) {
+  } finally {
+    yield put(ui.showLoader(false));
+  }
 }
 
 export function* editProduct({
@@ -58,6 +63,7 @@ export function* editProduct({
   },
 }) {
   try {
+    yield put(ui.showLoader(true));
     const timestamp = new Date();
     yield handleEditProduct({
       productId,
@@ -73,7 +79,10 @@ export function* editProduct({
       createdDate: timestamp,
     });
     yield put(fetchProductsStart());
-  } catch (err) {}
+  } catch (err) {
+  } finally {
+    yield put(ui.showLoader(false));
+  }
 }
 
 export function* onAddProductStart() {
@@ -86,10 +95,13 @@ export function* onEditProductStart() {
 
 export function* fetchProducts({ payload }) {
   try {
+    yield put(ui.showLoader(true));
     const products = yield handleFetchProducts(payload);
     yield put(setProducts(products));
   } catch (error) {
     console.log(error);
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
@@ -99,10 +111,13 @@ export function* onFetchProductsStart() {
 
 export function* deleteProduct({ payload }) {
   try {
+    yield put(ui.showLoader(true));
     yield handleDeleteProduct(payload);
     yield put(fetchProductsStart());
   } catch (error) {
     console.log(error);
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
@@ -112,10 +127,13 @@ export function* onDeleteProductStart() {
 
 export function* fetchProduct({ payload }) {
   try {
+    yield put(ui.showLoader(true));
     const product = yield handleFetchProduct(payload);
     yield put(setProduct(product));
   } catch (error) {
     console.log(error);
+  } finally {
+    yield put(ui.showLoader(false));
   }
 }
 
