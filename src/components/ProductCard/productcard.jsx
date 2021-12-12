@@ -13,6 +13,7 @@ const ProductCard = ({ book }) => {
   const {
     productThumbnail,
     productName,
+    productCategory,
     productAuthor,
     productDescription,
     productPrice,
@@ -42,7 +43,10 @@ const ProductCard = ({ book }) => {
           <ul>
             <li>
               <h1>{productName}</h1>
-              <h5>ISBN: {productISBN}</h5>
+              {productCategory
+        ? <h5>Género: {productCategory}</h5>
+        : <h5>Género: Otros</h5>
+  }
             </li>
             <li>
               <h3>{productAuthor}</h3>
@@ -81,6 +85,11 @@ const ProductCard = ({ book }) => {
           <ul>
             <li>
               <h1>{productName}</h1>
+              {productCategory
+        ? <h5>Género: {productCategory}</h5>
+        : <h5>Género: Otros</h5>
+      }
+             
               <h5>ISBN: {productISBN}</h5>
             </li>
             <li>
