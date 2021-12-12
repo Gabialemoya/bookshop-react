@@ -313,6 +313,7 @@ const PaymentDetails = () => {
         </div>
 
         <Button type="submit">Comprar</Button>
+        <Button onClick={() => history.goBack()}>Volver al carrito</Button>
       </form>
     </div>
   );
