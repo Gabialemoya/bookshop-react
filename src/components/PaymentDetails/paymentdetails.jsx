@@ -28,7 +28,7 @@ const initialAddressState = {
   city: "",
   state: "",
   postal_code: "",
-  country: "",
+  country: "Argentina",
 };
 
 const mapState = createStructuredSelector({
@@ -47,7 +47,6 @@ const PaymentDetails = () => {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   const [postal_code, setPostal_Code] = useState("");
-  const [itemArr, setItemArr] = useState([]);
 
   const [shippingAddress, setShippingAdress] = useState({
     ...initialAddressState,
@@ -73,12 +72,21 @@ const PaymentDetails = () => {
         errors[key] = "Campo requerido";
         setErrors(errors);
         valid = false;
-      } else {
-        if (key === "recipientMail" && !obj[key].match(regexEmail)) {
-          errors[key] = "Email incorrecto";
-          setErrors(errors);
-          valid = false;
-        }
+      } else if (key === "recipientMail" && !obj[key].match(regexEmail)) {
+        errors[key] = "Email incorrecto";
+        setErrors(errors);
+        valid = false;
+      } else if (key === "line1" && !obj[key].match(/\d{2}/g)) {
+        errors[key] = "La direccion debe contener al menos dos numeros";
+        setErrors(errors);
+        valid = false;
+      } else if (
+        key === "postal_code" &&
+        !obj[key].match(/^\d{4}|[A-Za-z]\d{4}[a-zA-Z]{3}$/g)
+      ) {
+        errors[key] = "El codigo postal debe contener al menos cuatro numeros";
+        setErrors(errors);
+        valid = false;
       }
 
       if (shippingAddress.country === "") {
@@ -289,7 +297,7 @@ const PaymentDetails = () => {
                   },
                 });
               }}
-              defaultOptionLabel="Seleccionar pais"
+              defaultOptionLabel={shippingAddress.country}
               value={shippingAddress.country}
               valueType="short"
             />
