@@ -192,15 +192,15 @@ const Admin = () => {
               options={[
                 {
                   name: "Otros",
-                  value: "",
+                  value: "otros",
                 },
                 {
                   value: "terror",
                   name: "Terror",
                 },
                 {
-                  value: "accion",
-                  name: "Accion",
+                  value: "informatica",
+                  name: "Informática",
                 },
                 {
                   value: "romance",

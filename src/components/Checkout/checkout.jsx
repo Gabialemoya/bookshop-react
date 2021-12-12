@@ -116,9 +116,9 @@ const Checkout = () => {
             </tbody>
           </table>
         ) : (
-            <p>
+            <h2>
               {errMsg}
-            </p>
+            </h2>
           )}
       </div>
     </div>
