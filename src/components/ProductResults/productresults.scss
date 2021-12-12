@@ -4,21 +4,6 @@
   padding: 0;
   margin: 20px 0;
 
-  .headSearch {
-    margin: 30px -10px 0;
-    text-align: center;
-  }
-
-  .productResults {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 30px -10px 0;
-  }
-  .SearchBar {
-    width: 25%;
-    display: grid;
-  }
-
   .productResults {
     display: flex;
     flex-wrap: wrap;
@@ -49,67 +34,67 @@
       object-fit: cover;
     }
   }
-}
 
-.filtros {
-  display: block;
-}
-
-.details {
-  display: block;
-  width: 100%;
-  padding: 10px 0;
-  margin: 0 auto;
-
-  ul,
-  ul li {
-    padding: 0;
-    margin: 0;
+  .filtros {
+    display: block;
   }
 
-  ul {
-    li {
-      display: block;
-      width: 100%;
-      list-style-type: none;
-      text-align: left;
-      margin: 0 0 5px;
+  .details {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin: 0 auto;
 
-      a {
-        color: black;
-      }
+    ul,
+    ul li {
+      padding: 0;
+      margin: 0;
+    }
 
-      .name {
-        font-size: 25px;
-        line-height: 1.2;
-        font-weight: 400;
-      }
-
-      .price {
-        font-size: 16px;
-        line-height: 1;
-        font-weight: 400;
-      }
-
-      .addToCart {
-        margin: 20px 0 0 0;
-      }
-      .noStock {
-        margin: 20px 0 0 0;
-        background-color: grey;
+    ul {
+      li {
         display: block;
         width: 100%;
-        font-size: 1.8rem;
-        line-height: 1;
-        font-weight: 300;
-        text-transform: uppercase;
-        color: white;
-        background: grey;
-        padding: 1rem;
-        text-align: center;
+        list-style-type: none;
+        text-align: left;
+        margin: 0 0 5px;
 
-        border: 0;
-        outline: none;
+        a {
+          color: black;
+        }
+
+        .name {
+          font-size: 25px;
+          line-height: 1.2;
+          font-weight: 400;
+        }
+
+        .price {
+          font-size: 16px;
+          line-height: 1;
+          font-weight: 400;
+        }
+
+        .addToCart {
+          margin: 20px 0 0 0;
+        }
+        .noStock {
+          margin: 20px 0 0 0;
+          background-color: grey;
+          display: block;
+          width: 100%;
+          font-size: 1.8rem;
+          line-height: 1;
+          font-weight: 300;
+          text-transform: uppercase;
+          color: white;
+          background: grey;
+          padding: 1rem;
+          text-align: center;
+
+          border: 0;
+          outline: none;
+        }
       }
     }
   }
