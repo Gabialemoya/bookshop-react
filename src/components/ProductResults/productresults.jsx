@@ -7,9 +7,11 @@ import FormSelect from "../forms/FormSelect/formselect";
 import FormInput from "../forms/FormInput/forminput";
 import Button from "../forms/Button/button";
 import LoadMore from "../LoadMore/loadmore";
-import "./productresults.scss";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+
+import "./productresults.scss";
 
 const mapState = ({ productsData }) => ({
   products: productsData.products,
@@ -51,8 +53,8 @@ const ProductResults = () => {
         name: "Terror",
       },
       {
-        value: "accion",
-        name: "Accion",
+        value: "informatica",
+        name: "Informática",
       },
       {
         value: "romance",
@@ -61,6 +63,10 @@ const ProductResults = () => {
       {
         value: "fantasia",
         name: "Fantasia",
+      },
+      {
+        value: "otros",
+        name: "Otros",
       },
     ],
     handleChange: handleFilter,
@@ -82,9 +88,10 @@ const ProductResults = () => {
 
   if (data.length < 1) {
     return (
-      <div>
-        <p>No se encontraron resultados.</p>
-        <Button onClick={() => history.goBack()}>Seguir comprando</Button>
+      <div className="products-notfound">
+        <h2>No se encontraron resultados.</h2>
+        <img src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif" alt="" />
+        <Button onClick={() => history.goBack()}>Volver</Button>
       </div>
     );
   }

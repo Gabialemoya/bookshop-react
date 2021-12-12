@@ -57,7 +57,7 @@ const ProductCard = ({ book }) => {
             
             <li>
               <h4>Sinopsis:</h4>
-              <p>{productDescription}</p>
+              <h4>{productDescription}</h4>
             </li>
             <li>
               <div >
@@ -100,8 +100,8 @@ const ProductCard = ({ book }) => {
             </li>
             
             <li>
-              <h4>Sinopsis:</h4>
-              <p>{productDescription}</p>
+              <h4 >Sinopsis:</h4>
+              <h4>{productDescription}</h4>
             </li>
             <li>
               <div >
