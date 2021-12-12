@@ -17,7 +17,7 @@ export const handleSaveOrder = order => {
 
 export const handleGetUserOrderHistory = uid => {
   return new Promise((resolve, reject) => {
-    let ref = firestore.collection('orders').orderBy('orderCreatedDate');
+    let ref = firestore.collection('orders').orderBy('orderCreatedDate','desc');
     ref = ref.where('orderUserID', '==', uid);
 
     ref
