@@ -1,11 +1,11 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Button from "../../components/forms/Button/button";
 import Product from "../../components/ProductResults/Product/product";
 import { firestore } from "../../firebase/utils";
-import './result.scss';
+import "./result.scss";
 
 const Result = () => {
   const { searchType } = useParams();
@@ -23,8 +23,10 @@ const Result = () => {
               .data()
               .productName.toUpperCase()
               .includes(searchType.toUpperCase()) ||
-            doc.data().productAuthor.toUpperCase()
-            .includes(searchType.toUpperCase()) ||
+            doc
+              .data()
+              .productAuthor.toUpperCase()
+              .includes(searchType.toUpperCase()) ||
             doc.data().productISBN === searchType
           ) {
             // doc.data() is never undefined for query doc snapshots
@@ -69,17 +71,25 @@ const Result = () => {
           })
         ) : (
           <div className="products-notfound">
-            <h2 style={{ marginLeft: "50px" , textAlign: "center"}}>
-            No hay resultados para "{searchType}"
-          </h2>
-          <img src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif" alt="" />
+           
          
+            <h2 style={{ textAlign: "center" }}>
+              No hay resultados para "{searchType}"
+            </h2>
+            <img
+              src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif"
+              alt=""
+            />
+            
           </div>
-          
-          
         )}
       </div>
-      <Button onClick={() => history.goBack()}>Volver</Button>
+      <Button
+              style={{ width: "580px", margin: "20px auto" }}
+              onClick={() => history.goBack()}
+            >
+              Volver
+            </Button>
     </div>
   );
 };
