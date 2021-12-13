@@ -45,7 +45,13 @@ const Result = () => {
 
   return (
     <div className="products">
+      {books.length ? (
+      <h3>{books.length} resultado(s) encontrado(s) para "{searchType}"</h3>
+      ):(
+        <h3></h3>
+      )}
       <div className="productResults">
+        
         {books.length ? (
           books.map((product) => {
             const { productThumbnail, productName, productPrice } = product;
@@ -67,12 +73,13 @@ const Result = () => {
             No hay resultados para "{searchType}"
           </h2>
           <img src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif" alt="" />
-          <Button onClick={() => history.goBack()}>Volver</Button>
+         
           </div>
           
           
         )}
       </div>
+      <Button onClick={() => history.goBack()}>Volver</Button>
     </div>
   );
 };
