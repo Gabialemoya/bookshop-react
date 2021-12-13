@@ -46,14 +46,13 @@ const Result = () => {
   console.log(searchType);
 
   return (
-    <div className="products">
+    <div className="productsFilter" style={{ textAlign: "center" }}>
       {books.length ? (
-      <h3>{books.length} resultado(s) encontrado(s) para "{searchType}"</h3>
-      ):(
-        <h3></h3>
-      )}
+        <h3>
+          {books.length} RESULTADO(S) ENCONTRADO(S) PARA "{searchType}"
+        </h3>
+      ) : null}
       <div className="productResults">
-        
         {books.length ? (
           books.map((product) => {
             const { productThumbnail, productName, productPrice } = product;
@@ -71,8 +70,6 @@ const Result = () => {
           })
         ) : (
           <div className="products-notfound">
-           
-         
             <h2 style={{ textAlign: "center" }}>
               No hay resultados para "{searchType}"
             </h2>
@@ -80,16 +77,33 @@ const Result = () => {
               src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif"
               alt=""
             />
-            
           </div>
         )}
       </div>
-      <Button
-              style={{ width: "580px", margin: "20px auto" }}
-              onClick={() => history.goBack()}
-            >
-              Volver
-            </Button>
+      {books.length === 1 && (
+        <Button
+          style={{ width: "33%", margin: "20px auto" }}
+          onClick={() => history.goBack()}
+        >
+          Volver
+        </Button>
+      )}
+      {books.length === 2 && (
+        <Button
+          style={{ width: "90%", margin: "20px auto" }}
+          onClick={() => history.goBack()}
+        >
+          Volver
+        </Button>
+      )}
+      {books.length >= 3 && (
+        <Button
+          style={{ width: "100%", margin: "20px auto" }}
+          onClick={() => history.goBack()}
+        >
+          Volver
+        </Button>
+      )}
     </div>
   );
 };

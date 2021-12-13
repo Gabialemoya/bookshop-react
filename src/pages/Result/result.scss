@@ -1,30 +1,27 @@
-.products {
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: 20px 0;
-  
-    .productResults {
-      display: flex;
-      flex-wrap: wrap;
-      margin: 30px -10px 0;
-    }
-    .SearchBar {
-      width: 300px;
-      display: inline-block;
-    }
+.productsFilter {
+  display: block;
+  padding: 0;
+  margin: 20px 30px;
+
+  .productResults {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px -10px 0;
   }
-  
-  .products-notfound{
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin: 20px 0;
-    align-items: center;
-   
-  
-    h2{
-      text-align: center;
-    }
-  
+  .SearchBar {
+    width: 300px;
+    display: inline-block;
   }
+}
+
+.products-notfound {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 20px 0;
+  align-items: center;
+
+  h2 {
+    text-align: center;
+  }
+}
