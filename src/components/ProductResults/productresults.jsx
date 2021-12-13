@@ -90,8 +90,16 @@ const ProductResults = () => {
     return (
       <div className="products-notfound">
         <h2>No se encontraron resultados.</h2>
-        <img src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif" alt="" />
-        <Button onClick={() => history.goBack()}>Volver</Button>
+        <img
+          src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif"
+          alt=""
+        />
+        <Button
+          style={{ width: "580px", margin: "20px auto" }}
+          onClick={() => history.goBack()}
+        >
+          Volver
+        </Button>
       </div>
     );
   }
@@ -132,8 +140,7 @@ const ProductResults = () => {
           if (
             !productThumbnail ||
             !productName ||
-            typeof productPrice === "undefined" 
-           
+            typeof productPrice === "undefined"
           )
             return null;
 
