@@ -5,7 +5,7 @@ export const handleResetPasswordAPI = (email) => {
     const config ={
         //pagina a la que mandamos al usuario una vez que 
         // modifico la contraseña
-        url: 'http://localhost:3000/login'
+        url: 'https://bookshop-react.netlify.app/login'
     };
 
     return new Promise((resolve, reject) => {
