@@ -77,6 +77,12 @@ const Result = () => {
               src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif"
               alt=""
             />
+            <Button
+          style={{ width: "33%", margin: "20px auto" }}
+          onClick={() => history.goBack()}
+        >
+          Volver
+        </Button>
           </div>
         )}
       </div>
