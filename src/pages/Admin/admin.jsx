@@ -26,7 +26,7 @@ const Admin = () => {
   const dispatch = useDispatch();
   const [hideModal, setHideModal] = useState(true);
   const [productId, setProductId] = useState(0);
-  const [productCategory, setProductCategory] = useState("");
+  const [productCategory, setProductCategory] = useState("otros");
   const [productISBN, setProductISBN] = useState("");
   const [productName, setProductName] = useState("");
   const [productAuthor, setProductAuthor] = useState("");
@@ -149,7 +149,7 @@ const Admin = () => {
   const handleClean = () => {
     setHideModal(true);
     setProductId(0);
-    setProductCategory("");
+    setProductCategory("otros");
     setProductISBN("");
     setProductName("");
     setProductAuthor("");

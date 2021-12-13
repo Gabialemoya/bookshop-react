@@ -16,7 +16,7 @@ const Directory = props =>{
                 }>
 
                     <h3>Este es un proyecto de Gabriela Moya y Rocío Pepek para la materia Práctica Profesional de la carrera Licenciatura en Informática en la Universidad Nacional del Oeste
-                    <br /> <a href="/search">Ir al bookshop</a>
+                    
                     </h3>
                    
                     
