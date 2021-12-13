@@ -1,14 +1,16 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory} from "react-router-dom";
+import Button from "../../components/forms/Button/button";
 import Product from "../../components/ProductResults/Product/product";
 import { firestore } from "../../firebase/utils";
+import './result.scss';
 
 const Result = () => {
   const { searchType } = useParams();
   const [books, setBooks] = useState([]);
-
+  const history = useHistory();
   useEffect(() => {
     firestore
       .collection("products")
@@ -19,10 +21,10 @@ const Result = () => {
           if (
             doc
               .data()
-              .productName.toUpperCase().split(" ")
+              .productName.toUpperCase()
               .includes(searchType.toUpperCase()) ||
-            doc.data().productAuthor.toUpperCase() ===
-              searchType.toUpperCase() ||
+            doc.data().productAuthor.toUpperCase()
+            .includes(searchType.toUpperCase()) ||
             doc.data().productISBN === searchType
           ) {
             // doc.data() is never undefined for query doc snapshots
@@ -60,9 +62,15 @@ const Result = () => {
             return <Product {...configProduct} />;
           })
         ) : (
-          <h2 style={{ marginLeft: "50px" }}>
-            No hay resultados para esta búsqueda
+          <div className="products-notfound">
+            <h2 style={{ marginLeft: "50px" , textAlign: "center"}}>
+            No hay resultados para "{searchType}"
           </h2>
+          <img src="https://peru21.pe/resizer/EaTHMikWM1IDeQen9Dy1sEPoC4g=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/HYAA7S354JAYBBCB73HJZSGZIY.gif" alt="" />
+          <Button onClick={() => history.goBack()}>Volver</Button>
+          </div>
+          
+          
         )}
       </div>
     </div>
