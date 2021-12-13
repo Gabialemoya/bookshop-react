@@ -27,7 +27,7 @@ const Confirm = () => {
         width="35%"
       />
       <Button
-        style={{ width: "50%", margin: "20px auto" }}
+        style={{ width: "600px", margin: "20px auto" }}
         onClick={() => handleHome()}
       >
         Ir a Inicio
